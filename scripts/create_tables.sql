@@ -1,8 +1,8 @@
 CREATE TABLE Recipes (
     Id UUID PRIMARY KEY,
-    Name VARCHAR UNIQUE,
+    Name VARCHAR(150) UNIQUE,
     Ingredients VARCHAR(50)[] NOT NULL CHECK (cardinality(Ingredients) > 0),
-    PreparationInstructions TEXT NOT NULL,
+    Instructions TEXT NOT NULL,
 	Pictures VARCHAR(200)[] NOT NULL DEFAULT '{}',
     Videos VARCHAR(200)[] NOT NULL DEFAULT '{}',
     PreparationTime INTEGER NOT NULL CHECK (PreparationTime >= 0), -- minutes
