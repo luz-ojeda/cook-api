@@ -1,0 +1,1 @@
+CREATE TYPE recipe_difficulty AS ENUM ('easy', 'medium', 'hard');
