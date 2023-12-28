@@ -33,7 +33,7 @@
 
 ### Installation
 
-## Local database setup (optional)
+#### Local database setup (optional)
 
 1. Install PostgreSQL: Download and install PostgreSQL from the [official PostgreSQL website](https://www.postgresql.org/download/). Ensure that the version is at least 9.6
 2. Inside the `scripts` folder execute:
@@ -41,7 +41,7 @@
    2. `create_tables.sql`
    3. `insert_recipes.sql`
 
-## API
+#### API
 1. Clone the repository:
 
    ```bash
