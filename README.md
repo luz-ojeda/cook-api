@@ -29,15 +29,24 @@
 ### Prerequisites
 
 - [.NET SDK](https://dotnet.microsoft.com/download)
-- [Optional: Database setup, if applicable]
+- PostgreSQL at least. 9.6 (if setting up a local database)
 
 ### Installation
 
+## Local database setup (optional)
+
+1. Install PostgreSQL: Download and install PostgreSQL from the [official PostgreSQL website](https://www.postgresql.org/download/). Ensure that the version is at least 9.6
+2. Inside the `scripts` folder execute:
+   1. `create_types.sql`
+   2. `create_tables.sql`
+   3. `insert_recipes.sql`
+
+## API
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-project.git
-   cd your-project
+   git clone https://github.com/luz-ojeda/cook-api.git
+   cd cook-api
 
 ### Running the API
 
