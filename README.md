@@ -40,6 +40,7 @@
    1. `create_types.sql`
    2. `create_tables.sql`
    3. `insert_recipes.sql`
+   4. `insert_ingredients.sql`
 
 #### API
 1. Clone the repository:
