@@ -19,3 +19,9 @@ CREATE INDEX idx_recipe_name ON Recipes (Name);
 
 -- Index on Ingredients column
 CREATE INDEX idx_recipe_ingredients ON Recipes USING GIN(Ingredients);
+
+CREATE TABLE Ingredients (
+    Id UUID PRIMARY KEY,
+    Name VARCHAR(50),
+    Substitutions VARCHAR(50)[]
+)
