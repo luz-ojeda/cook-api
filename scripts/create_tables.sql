@@ -9,7 +9,6 @@ CREATE TABLE Recipes (
     CookingTime INTEGER NOT NULL CHECK (CookingTime >= 0), -- minutes
     Servings INTEGER NOT NULL CHECK (Servings > 0),
     Difficulty recipe_difficulty NOT NULL,
-    Tried BOOLEAN DEFAULT FALSE,
 	Vegetarian BOOLEAN DEFAULT FALSE,
     CONSTRAINT chk_difficulty_valid CHECK (Difficulty IS NULL OR Difficulty IN ('easy', 'medium', 'hard'))
 );
