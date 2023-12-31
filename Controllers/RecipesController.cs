@@ -1,4 +1,7 @@
+using CookApi.Data;
+using CookApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace cook_api.Controllers;
 
@@ -6,22 +9,19 @@ namespace cook_api.Controllers;
 [Route("[controller]")]
 public class RecipesController : ControllerBase
 {
+    private readonly CookApiContext _context;
     private readonly ILogger<RecipesController> _logger;
 
-    public RecipesController(ILogger<RecipesController> logger)
+    public RecipesController(CookApiContext context, ILogger<RecipesController> logger)
     {
         _logger = logger;
+        _context = context;
     }
 
-    // [HttpGet(Name = "GetWeatherForecast")]
-    // public IEnumerable<WeatherForecast> Get()
-    // {
-    //     return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-    //     {
-    //         Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-    //         TemperatureC = Random.Shared.Next(-20, 55),
-    //         Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-    //     })
-    //     .ToArray();
-    // }
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
+    {
+        var recipes = await _context.Recipes.ToListAsync();
+        return recipes;
+    }
 }
