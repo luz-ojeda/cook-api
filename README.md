@@ -17,39 +17,56 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-  - [Running the API](#running-the-api)
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
 - [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Getting Started
 
 ### Prerequisites
 
 - [.NET SDK](https://dotnet.microsoft.com/download)
-- PostgreSQL at least. 9.6 (if setting up a local database)
+- [PostgreSQL](https://www.postgresql.org/download/) at least. 9.6
 
 ### Installation
 
-#### Local database setup (optional)
-
-1. Install PostgreSQL: Download and install PostgreSQL from the [official PostgreSQL website](https://www.postgresql.org/download/). Ensure that the version is at least 9.6
-2. Inside the `scripts` folder execute:
-   1. `create_types.sql`
-   2. `create_tables.sql`
-   3. `insert_recipes.sql`
-   4. `insert_ingredients.sql`
-
-#### API
 1. Clone the repository:
 
    ```bash
    git clone https://github.com/luz-ojeda/cook-api.git
+
+2. Navigate to the project's root directory
+
+   ```bash
    cd cook-api
 
-### Running the API
+Inside the `appsettings.Development.json` file, locate the `ConnectionStrings` property and update `CookDB` with your database credentials (or use the default string making sure a database named `cook` exists).
+
+   ```json
+   {
+     "ConnectionStrings": {
+       "CookDB": "Host=localhost;Username=YourUsername;Password=YourPassword;Database=YourDatabase;"
+     },
+     // ...
+   }
+   ```
+3. Apply migrations
+
+   ```bash
+   dotnet restore
+   dotnet ef migrations add InitialMigrate
+   dotnet ef database update
+   ```
+
+4. Run the API
+
+   ```bash
+   dotnet run
+   ```
+
+### Additional Notes
+
+- **SQL Scripts for Initial Data**: Inside `scripts/` (`insert_recipes.sql` and `insert_ingredients.sql`) you can find scripts to insert initial sample recipes and ingredients into the database.
 
 ## Usage
 
