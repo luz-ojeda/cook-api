@@ -27,7 +27,7 @@ public class Recipe
 
     public int Servings { get; set; }
 
-    public RecipeDifficulty Difficulty { get; set; }
+    public RecipeDifficulty? Difficulty { get; set; }
 
     public bool Vegetarian { get; set; }
 }
