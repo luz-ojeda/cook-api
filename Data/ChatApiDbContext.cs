@@ -1,7 +1,6 @@
 using CookApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace CookApi.Data;
 
 public class CookApiContext : DbContext
@@ -38,7 +37,7 @@ public class CookApiContext : DbContext
             modelBuilder.Entity<Recipe>()
                 .Property(r => r.Ingredients)
                 .UseCollation("case_insensitive")
-                .HasColumnType("varchar(50)[]");
+                .HasColumnType("varchar(200)[]");
 
             modelBuilder.Entity<Recipe>()
                 .Property(r => r.Pictures)
@@ -76,13 +75,13 @@ public class CookApiContext : DbContext
                 .ToTable(r => r.HasCheckConstraint("CK_Recipe_Ingredients", "cardinality(\"Ingredients\") > 0"));
 
             modelBuilder.Entity<Recipe>()
-                .ToTable(r => r.HasCheckConstraint("CK_Recipe_PreparationTime", "\"PreparationTime\" > 0"));
+                .ToTable(r => r.HasCheckConstraint("CK_Recipe_PreparationTime", "\"PreparationTime\" > 0 OR \"PreparationTime\" IS NULL"));
 
             modelBuilder.Entity<Recipe>()
-                .ToTable(r => r.HasCheckConstraint("CK_Recipe_CookingTime", "\"CookingTime\" >= 0"));
+                .ToTable(r => r.HasCheckConstraint("CK_Recipe_CookingTime", "\"CookingTime\" >= 0 OR \"PreparationTime\" IS NULL"));
 
             modelBuilder.Entity<Recipe>()
-                .ToTable(r => r.HasCheckConstraint("CK_Recipe_Difficulty", "\"Difficulty\" IN ('Easy', 'Medium', 'Hard')"));
+                .ToTable(r => r.HasCheckConstraint("CK_Recipe_Difficulty", "\"Difficulty\" IN ('Easy', 'Medium', 'Hard') OR \"Difficulty\" IS NULL"));
 
             base.OnModelCreating(modelBuilder);
         }

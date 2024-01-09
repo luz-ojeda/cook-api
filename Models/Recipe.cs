@@ -21,11 +21,11 @@ public class Recipe
 
     public List<string> Videos { get; set; } = new List<string>();   // Default to an empty list
 
-    public int PreparationTime { get; set; }
+    public int? PreparationTime { get; set; }
 
-    public int CookingTime { get; set; }
+    public int? CookingTime { get; set; }
 
-    public int Servings { get; set; }
+    public int? Servings { get; set; }
 
     public RecipeDifficulty? Difficulty { get; set; }
 
