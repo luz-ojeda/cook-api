@@ -66,7 +66,7 @@ Inside the `appsettings.Development.json` file, locate the `ConnectionStrings` p
 
 ### Additional Notes
 
-- **SQL Scripts for Initial Data**: Inside `scripts/` (`insert_recipes.sql` and `insert_ingredients.sql`) you can find scripts to insert initial sample recipes and ingredients into the database.
+- **SQL Scripts for Initial Data**: Inside `scripts/` you can find some scripts ((`insert_recipes.sql`, `insert_bbcfood_recipes_spanish.sql` and `insert_ingredients.sql`)) to insert initial sample recipes and ingredients into the database.
 
 ## Usage
 
