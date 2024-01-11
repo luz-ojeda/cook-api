@@ -38,7 +38,7 @@
 2. Navigate to the project's root directory
 
    ```bash
-   cd cook-api
+   cd cook-api/CookApi
 
 Inside the `appsettings.Development.json` file, locate the `ConnectionStrings` property and update `CookDB` with your database credentials (or use the default string making sure a database named `cook` exists).
 
