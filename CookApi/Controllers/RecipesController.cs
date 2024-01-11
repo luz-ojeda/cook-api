@@ -24,4 +24,11 @@ public class RecipesController : ControllerBase
         var recipes = await _context.Recipes.ToListAsync();
         return recipes;
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Recipe>> GetRecipeById()
+    {
+        var recipes = await _context.Recipes.ToListAsync();
+        return recipes.FirstOrDefault();
+    }
 }
