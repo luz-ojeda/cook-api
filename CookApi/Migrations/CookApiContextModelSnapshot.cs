@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace cook_api.Migrations
 {
-    [DbContext(typeof(CookApiContext))]
+    [DbContext(typeof(CookApiDbContext))]
     partial class CookApiContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

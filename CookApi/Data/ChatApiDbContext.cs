@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CookApi.Data;
 
-public class CookApiContext : DbContext
+public class CookApiDbContext : DbContext
 {
     public DbSet<Recipe> Recipes { get; set; }
 
     public DbSet<Ingredient> Ingredients { get; set; }
 
-    public CookApiContext(DbContextOptions options) : base(options) {}
+    public CookApiDbContext(DbContextOptions options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

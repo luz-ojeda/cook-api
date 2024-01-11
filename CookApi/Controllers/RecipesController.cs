@@ -9,10 +9,10 @@ namespace cook_api.Controllers;
 [Route("[controller]")]
 public class RecipesController : ControllerBase
 {
-    private readonly CookApiContext _context;
+    private readonly CookApiDbContext _context;
     private readonly ILogger<RecipesController> _logger;
 
-    public RecipesController(CookApiContext context, ILogger<RecipesController> logger)
+    public RecipesController(CookApiDbContext context, ILogger<RecipesController> logger)
     {
         _logger = logger;
         _context = context;

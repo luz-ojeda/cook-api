@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<CookApi.Data.CookApiContext>(options =>
+builder.Services.AddDbContext<CookApi.Data.CookApiDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("CookDB")));
 
 builder.Services.AddControllers();

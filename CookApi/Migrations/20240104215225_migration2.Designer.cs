@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace cook_api.Migrations
 {
-    [DbContext(typeof(CookApiContext))]
+    [DbContext(typeof(CookApiDbContext))]
     [Migration("20240104215225_migration2")]
     partial class migration2
     {
