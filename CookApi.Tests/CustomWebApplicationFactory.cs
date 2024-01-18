@@ -3,6 +3,8 @@ using CookApi.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CookApi.Tests;
 
@@ -11,6 +13,10 @@ public class CustomWebApplicationFactory<TProgram>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.Development.json")
+            .Build();
+
         builder.ConfigureServices(services =>
         {
             var dbContextDescriptor = services.SingleOrDefault(
@@ -25,23 +31,21 @@ public class CustomWebApplicationFactory<TProgram>
 
             services.Remove(dbConnectionDescriptor);
 
-            // Create open SqliteConnection so EF won't automatically close it.
             services.AddSingleton<DbConnection>(container =>
             {
-                var connection = new SqliteConnection("DataSource=:memory:");
+                var connection = new Npgsql.NpgsqlConnection(configuration.GetConnectionString("TestDB"));
                 connection.Open();
 
                 return connection;
             });
 
-            services.AddDbContext<ApplicationDbContext>((container, options) =>
+            services.AddDbContext<CookApiDbContext>((container, options) =>
             {
                 var connection = container.GetRequiredService<DbConnection>();
-                options.UseSqlite(connection);
+                options.UseNpgsql(connection);
             });
         });
 
         builder.UseEnvironment("Development");
     }
 }
-// </snippet1>

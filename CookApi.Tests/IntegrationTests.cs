@@ -6,13 +6,13 @@ using System.Net.Http.Json;
 namespace CookApi.Tests
 {
     [TestClass]
-    public class ApiTests
+    public class IntegrationTests
     {
         private readonly HttpClient _httpClient;
 
-        public ApiTests()
+        public IntegrationTests()
         {
-            var webAppFactory = new WebApplicationFactory<Program>();
+            var webAppFactory = new CustomWebApplicationFactory<Program>();
             _httpClient = webAppFactory.CreateDefaultClient();
         }
 
