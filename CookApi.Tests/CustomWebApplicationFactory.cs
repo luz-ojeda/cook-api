@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using CookApi.Data;
+﻿using CookApi.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -25,25 +24,17 @@ public class CustomWebApplicationFactory<TProgram>
 
             services.Remove(dbContextDescriptor);
 
-            var dbConnectionDescriptor = services.SingleOrDefault(
-                d => d.ServiceType ==
-                    typeof(DbConnection));
-
-            services.Remove(dbConnectionDescriptor);
-
-            services.AddSingleton<DbConnection>(container =>
-            {
-                var connection = new Npgsql.NpgsqlConnection(configuration.GetConnectionString("TestDB"));
-                connection.Open();
-
-                return connection;
-            });
-
             services.AddDbContext<CookApiDbContext>((container, options) =>
             {
-                var connection = container.GetRequiredService<DbConnection>();
-                options.UseNpgsql(connection);
+                options.UseNpgsql(configuration.GetConnectionString("TestDB"));
             });
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            using var scope = serviceProvider.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<CookApiDbContext>();
+
+            db.Database.EnsureCreated();
         });
 
         builder.UseEnvironment("Development");
