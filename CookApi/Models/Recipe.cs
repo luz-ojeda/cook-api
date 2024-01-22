@@ -11,11 +11,11 @@ public class Recipe
 {
     public Guid Id { get; set; }
 
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
-    public List<string> Ingredients { get; set; }
+    public required List<string> Ingredients { get; set; }
 
-    public string Instructions { get; set; }
+    public required string Instructions { get; set; }
 
     public List<string> Pictures { get; set; } = new List<string>(); // Default to an empty list
 
