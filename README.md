@@ -77,3 +77,17 @@ This API is self-documented using Swagger. With the project running, you can acc
 `http://localhost:5000/swagger`
 
 ## Testing
+
+Tests can be found in the `CookApi.Tests` project.
+
+Integration tests rely on a PostgreSQL database that is created on runtime and deleted after all tests have run. The connection string for this database is retrieved in the `CustomWebApplicationFactory.cs` file from `appsettings.Development.json` `TestDB` value.
+
+To run them:
+
+1. cd into directory:
+
+   ```bash
+   cd cook-api\CookApi.Tests\
+2. Run:
+   ```bash
+   dotnet test
