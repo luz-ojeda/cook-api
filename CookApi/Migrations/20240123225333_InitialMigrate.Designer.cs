@@ -10,18 +10,17 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace cook_api.Migrations
+namespace CookApi.Migrations
 {
     [DbContext(typeof(CookApiDbContext))]
-    [Migration("20240104215225_migration2")]
-    partial class migration2
+    [Migration("20240123225333_InitialMigrate")]
+    partial class InitialMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:CollationDefinition:case_insensitive", "und-u-ks-level2,und-u-ks-level2,icu,False")
                 .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -36,13 +35,11 @@ namespace cook_api.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .UseCollation("case_insensitive");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<List<string>>("Substitutions")
                         .IsRequired()
-                        .HasColumnType("varchar(50)[]")
-                        .UseCollation("case_insensitive");
+                        .HasColumnType("varchar(50)[]");
 
                     b.HasKey("Id");
 
@@ -67,8 +64,7 @@ namespace cook_api.Migrations
 
                     b.Property<List<string>>("Ingredients")
                         .IsRequired()
-                        .HasColumnType("varchar(200)[]")
-                        .UseCollation("case_insensitive");
+                        .HasColumnType("varchar(200)[]");
 
                     b.Property<string>("Instructions")
                         .IsRequired()
@@ -77,8 +73,7 @@ namespace cook_api.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("character varying(150)")
-                        .UseCollation("case_insensitive");
+                        .HasColumnType("character varying(150)");
 
                     b.Property<List<string>>("Pictures")
                         .IsRequired()

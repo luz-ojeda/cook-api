@@ -13,8 +13,6 @@ public class CookApiDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasCollation("case_insensitive", provider: "icu", locale: "und-u-ks-level2", deterministic: false);
-
             /* Indexes */
             modelBuilder.Entity<Recipe>()
                 .HasIndex(r => new { r.Name })
@@ -31,12 +29,10 @@ public class CookApiDbContext : DbContext
             /* Properties */
             modelBuilder.Entity<Recipe>()
                 .Property(r => r.Name)
-                .UseCollation("case_insensitive")
                 .HasMaxLength(150);
 
             modelBuilder.Entity<Recipe>()
                 .Property(r => r.Ingredients)
-                .UseCollation("case_insensitive")
                 .HasColumnType("varchar(200)[]");
 
             modelBuilder.Entity<Recipe>()
@@ -62,12 +58,10 @@ public class CookApiDbContext : DbContext
 
             modelBuilder.Entity<Ingredient>()
                 .Property(i => i.Name)
-                .UseCollation("case_insensitive")
                 .HasMaxLength(50);
 
             modelBuilder.Entity<Ingredient>()
                 .Property(i => i.Substitutions)
-                .UseCollation("case_insensitive")
                 .HasColumnType("varchar(50)[]");
 
             /* Constraints */
