@@ -22,7 +22,20 @@ public class IntegrationTests
         var recipes = await response.Content.ReadFromJsonAsync<List<Recipe>>();
 
         Assert.IsNotNull(recipes, "The list of recipes should not be null");
-        Assert.IsTrue(1 > 0, "The list of recipes should not be empty");
+        Assert.IsTrue(recipes.Count > 0, "The list of recipes should not be empty");
+    }
+
+    [TestMethod]
+    public async Task Recipes_ReturnPaginatedRecipes()
+    {
+        var limit = 10;
+        var limitQueryParameter = $"limit={limit}";
+
+        var response = await _httpClient.GetAsync("/recipes?" + limitQueryParameter);
+        var recipes = await response.Content.ReadFromJsonAsync<List<Recipe>>();
+        var recipesCount = recipes?.Count;
+
+        Assert.IsTrue(recipesCount == 10, $"Expected {limit} recipes, but got {recipesCount}");
     }
 
     [TestMethod]

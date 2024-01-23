@@ -33,8 +33,6 @@ public class CustomWebApplicationFactory<TProgram>
 
             using var scope = serviceProvider.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<CookApiDbContext>();
-
-            db.Database.EnsureCreated();
         });
 
         builder.UseEnvironment("Development");

@@ -21,4 +21,10 @@
     <ProjectReference Include="..\CookApi\CookApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="insert_recipes.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
