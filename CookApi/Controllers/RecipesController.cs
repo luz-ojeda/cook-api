@@ -21,13 +21,21 @@ public class RecipesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes(
         [FromQuery] int limit = 10,
-        [FromQuery] int skip = 0
+        [FromQuery] int skip = 0,
+        [FromQuery] string? name = null
     )
     {
-        var recipes = await _context.Recipes
-            .Skip(skip)
-            .Take(limit)
-            .ToListAsync();
+        IQueryable<Recipe> query = _context.Recipes.AsQueryable();
+
+        query = query.Skip(skip).Take(limit);
+
+        if (!string.IsNullOrEmpty(name))
+        {
+            query = query.Where(recipe => recipe.Name.ToLower().Contains(name.ToLower()));
+        }
+
+        var recipes = await query.ToListAsync();
+
         return recipes;
     }
 
