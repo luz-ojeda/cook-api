@@ -19,9 +19,15 @@ public class RecipesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
+    public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes(
+        [FromQuery] int limit = 10,
+        [FromQuery] int skip = 0
+    )
     {
-        var recipes = await _context.Recipes.ToListAsync();
+        var recipes = await _context.Recipes
+            .Skip(skip)
+            .Take(limit)
+            .ToListAsync();
         return recipes;
     }
 
