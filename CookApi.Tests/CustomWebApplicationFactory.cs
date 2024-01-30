@@ -26,7 +26,7 @@ public class CustomWebApplicationFactory<TProgram>
 
             services.AddDbContext<CookApiDbContext>((container, options) =>
             {
-                options.UseNpgsql(configuration.GetConnectionString("TestDB"));
+                options.UseNpgsql(configuration.GetConnectionString("Test"));
             });
 
             var serviceProvider = services.BuildServiceProvider();
