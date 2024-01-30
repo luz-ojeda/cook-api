@@ -80,7 +80,7 @@ This API is self-documented using Swagger. With the project running, you can acc
 
 Tests can be found in the `CookApi.Tests` project.
 
-Integration tests rely on a PostgreSQL database that is created on runtime and deleted after all tests have run. The connection string for this database is retrieved in the `CustomWebApplicationFactory.cs` file from `appsettings.Development.json` `TestDB` value.
+Integration tests rely on a PostgreSQL database that is created on runtime and deleted after all tests have run. The connection string for this database is retrieved in the `CustomWebApplicationFactory.cs` file from `appsettings.Development.json` `Test` value.
 
 To run them:
 

@@ -19,6 +19,9 @@ services:
       - db-password
     volumes:
       - db-data:/var/lib/postgresql/data
+      - ./SqlScripts/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./SqlScripts/insert_recipes.sql:/docker-entrypoint-initdb.d/insert_recipes.sql
+      - ./SqlScripts/insert_ingredients.sql:/docker-entrypoint-initdb.d/insert_ingredients.sql
     environment:
       - POSTGRES_DB=cook
       - POSTGRES_PASSWORD_FILE=/run/secrets/db-password

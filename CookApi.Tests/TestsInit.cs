@@ -51,7 +51,7 @@ public class GlobalTestInitializer
         var services = new ServiceCollection();
         services.AddDbContext<CookApiDbContext>((container, options) =>
         {
-            options.UseNpgsql(Configuration.GetConnectionString("TestDB"));
+            options.UseNpgsql(Configuration.GetConnectionString("Test"));
         });
 
         return services.BuildServiceProvider();
