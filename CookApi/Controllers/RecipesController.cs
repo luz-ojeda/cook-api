@@ -22,19 +22,34 @@ public class RecipesController : ControllerBase
     public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes(
         [FromQuery] int limit = 10,
         [FromQuery] int skip = 0,
-        [FromQuery] string? name = null
+        [FromQuery] string? name = null,
+        [FromQuery] string[]? ingredients = null
     )
     {
         IQueryable<Recipe> query = _context.Recipes.AsQueryable();
-
-        query = query.Skip(skip).Take(limit);
 
         if (!string.IsNullOrEmpty(name))
         {
             query = query.Where(recipe => recipe.Name.ToLower().Contains(name.ToLower()));
         }
 
-        var recipes = await query.ToListAsync();
+        if (ingredients != null && ingredients?.Length != 0)
+        {
+            var lowerCaseIngredients = ingredients.Select(i => i.ToLower()).ToArray();
+
+            // The following produces a query that retrieves recipes that have ALL the ingredientes used in the
+            // query parameter in its recipes
+            //
+            // For example: using "cheese" and "pasta" retrieves all the recipes that at least have those _two_
+            // ingredients in their Ingredients property
+            foreach (string ingredient in lowerCaseIngredients)
+            {
+                query = query.Where(
+                    recipe => recipe.Ingredients.Any(i => i.Contains(ingredient))
+                );
+            }
+        }
+        var recipes = await query.Skip(skip).Take(limit).ToListAsync();
 
         return recipes;
     }

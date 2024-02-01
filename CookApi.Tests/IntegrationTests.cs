@@ -1,6 +1,5 @@
 using CookApi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Net.Http.Json;
 
 namespace CookApi.Tests;
@@ -50,7 +49,25 @@ public class IntegrationTests
 
         Assert.IsTrue(
             recipes?.All(r => r.Name.ToLower().Contains("salad")),
-            $"Not all recipes contain the string used for searching in their name");
+            "Not all recipes contain the string used for searching in their name");
+    }
+
+    [TestMethod]
+    public async Task Recipes_ReturnRecipesByIngredient()
+    {
+        List<string> ingredientsToBeSearchedFor = ["cHEeSe", "PaStA"];
+        var ingredientsQueryParameter = $"ingredients={ingredientsToBeSearchedFor[0]}&ingredients={ingredientsToBeSearchedFor[1]}";
+
+        var response = await _httpClient.GetAsync("/recipes?" + ingredientsQueryParameter);
+        var recipes = await response.Content.ReadFromJsonAsync<List<Recipe>>();
+
+        Assert.IsTrue(recipes.Count > 0, "Zero recipes were returned");
+        Assert.IsTrue(
+            recipes?.All(
+                r => ingredientsToBeSearchedFor.Any(
+                    i => r.Ingredients.Any(
+                        recipeIngredient => recipeIngredient.Contains(i.ToLower())))),
+            "Not all recipes contain at least one of the specified ingredients");
     }
 
     [TestMethod]
