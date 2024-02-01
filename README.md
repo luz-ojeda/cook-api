@@ -74,7 +74,7 @@ Inside the `appsettings.Development.json` file, locate the `ConnectionStrings` p
    ```bash
    git clone https://github.com/luz-ojeda/cook-api.git
 
-2. Create a `db` folder in root with your PostgreSQL password in a `password.txt` file inside. A `db-password` is defined in the `compose.yaml` file, the db service will retrieve the PSQL password from this secret.
+2. Create a `db` folder in root with your PostgreSQL password in a `password.txt` file inside. A `db-password` [secret](https://docs.docker.com/engine/swarm/secrets/) is defined in the `compose.yaml` file, the db service will retrieve the PSQL password from this secret.
 
 3. Build and run with Docker Compose
 
