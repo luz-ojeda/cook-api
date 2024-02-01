@@ -6,7 +6,7 @@ INSERT INTO public."Recipes" (
 VALUES 
   (
     '5febedab-d1fa-42b9-ae7a-8233af2aee95', 
-    'Pizza de diez minutos', ARRAY[ 'Harina lisa de 250 g/8¾oz, más extra para el polvo', 
+    'Pizza de diez minutos', ARRAY[ 'harina lisa de 250 g/8¾oz, más extra para el polvo', 
     '8 cucharadas de aceite de oliva', 
     '2 cucharaditas de agua', '1 cucharadita de sal marina' ], 
     'Precaliente el horno a 200C/400F/Gas 6.
@@ -21,9 +21,9 @@ Sirva en un plato grande y corte en cuñas para servir.',
   (
     'c88c798f-3e95-4903-98ff-b75d3ecea87a', 
     'Sopa de almendras', ARRAY[ '25g/1oz mantequilla', 
-    '1 ajo de clavo, triturado', 'Caldo de vegetales de 150 ml/¼ de pinta', 
+    '1 ajo de clavo, triturado', 'caldo de vegetales de 150 ml/¼ de pinta', 
     '50 ml/2fl oz de crema doble', 
-    'Almendras enteras de 75 g/3oz, tostadas y finamente picadas' ], 
+    'almendras enteras de 75 g/3oz, tostadas y finamente picadas' ], 
     'Para la sopa, derrita la mantequilla en una cacerola pequeña a fuego medio.Agregue el ajo y saltee hasta que se ablanden.
 Agregue el caldo de verduras, la crema doble y las almendras y cocine a fuego lento durante cinco minutos.
 Mezcle con una licuadora de mano y vierta en un tazón.
@@ -35,7 +35,7 @@ Para servir, espolvoree los crutones sobre la sopa.',
   (
     'c54afc14-77a9-460d-b2ee-6529a33c167b', 
     'Pizza alpina', ARRAY[ '500 g/1 lb 2 oz de harina lisa fuerte, más extra para el polvo', 
-    '2 cucharaditas de sal', '1 x 7g Sachete de levadura seca', 
+    '2 cucharaditas de sal', '1 x 7g sachett de levadura seca', 
     '320 ml/11fl oz agua tibia', 'migas de pan o sémola seca, para desempolvar' ], 
     'Para la masa de pizza, combine la harina, la sal y la levadura en un tazón grande.Agregue gradualmente el agua, mezclando bien con las manos para obtener una masa.Si encuentra la masa demasiado pegajosa, simplemente agregue un poco más de harina.Forma en una pelota, cubra con una tela y deje descansar durante cinco minutos.
 Amasar la masa durante unos 10 minutos y divídala por la mitad.Espolvorea un poco de harina en un paño de cocina limpio y coloca los trozos de masa sobre ella.Cubra con un paño ligeramente húmedo y deje que se levante durante al menos 30 minutos en un lugar cálido.
@@ -63,8 +63,8 @@ Para servir, coloque las galletas Amaretti en un plato para servir y espolvoree 
     'Amaretti tiramisú', ARRAY[ '200 ml/7fl oz café negro fuerte', 
     '½ brandy miniatura', '6 galletas Amaretti', 
     '150 ml/5fl oz de crema doble, batido', 
-    'Chocolate de 50 g/1¾oz, rallado', 
-    '50 g/1¾oz Cerezas con estardas, drenadas, Piedras eliminadas', 
+    'chocolate de 50 g/1¾oz, rallado', 
+    '50 g/1¾oz cerezas con estardas, drenadas sin carozo', 
     '1 cucharada de cacao en polvo, para polvo' ], 
     'Coloque el café y el brandy en un tazón y mezcle.
 Sumerja las galletas en la mezcla, luego coloque la mitad de ellas en la base de un vidrio de postre.
@@ -96,11 +96,11 @@ Hornee a 190C/375F/Gas 5 durante 12-15 minutos hasta que las tartas estén cruji
     '½ cebolla, finamente picada', 
     '1 ajo de clavo, finamente picado', 
     '½ cucharadita de copos de chile secos', 
-    'Vino blanco de 50 ml/2fl oz', 
+    'vino blanco de 50 ml/2fl oz', 
     '2 tomates, desollados y picados', 
     '1 cucharadita de perejil picado', 
     'sal y pimienta negra recién molida', 
-    '150G/5½OZ PASTA, COCIDADA AL DENTE' ], 
+    '150G/5½OZ Pasta, cocinada al dente' ], 
     'Derrita la mantequilla con el aceite de oliva en una sartén y fríe la cebolla, el ajo y el chile hasta que estén suaves.
 Agregue el vino blanco y cocine para reducir a la mitad.
 Agregue los tomates picados y cocine a fuego lento durante cinco minutos.
@@ -111,9 +111,9 @@ Mezcle la pasta a través de la salsa y sirva en un tazón cálido.',
   (
     '73c203b4-baf4-4561-a2b6-f053bb4fc692', 
     'Pasta boloñesa y tortellini de ricota con calabacín y salsa de ajo', 
-    ARRAY[ '200G/7OZ ''00'' Harina de pasta', 
+    ARRAY[ '200G/7OZ ''00'' harina de pasta', 
     '1 huevo de gama libre y 6 yemas de huevo', 
-    '50 g/1¾oz Fina Fina de la sémola' ], 
+    '50 g/1¾oz fina Fina de la sémola' ], 
     'Para la pasta, coloque la harina, el huevo y las yemas de huevo en un procesador de alimentos y pulse hasta que estén bien combinados y la mezcla se une como una masa.Coloque la masa en un tazón, cubra con una película adhesiva y colóquelo en el refrigerador para descansar durante 30 minutos.
 Corte la masa de pasta por la mitad y alimente una de las piezas a través de una máquina de pasta de acuerdo con las instrucciones de la máquina, terminando en la configuración más delgada.Pase a través de un cortador de tagliatelle.Ponga a un lado la otra mitad para el tortellini.
 Para la boloñesa, calienta una cacerola grande y pesada a fuego medio.Cuando esté caliente, agregue el aceite de oliva, la cebolla, el apio, el ajo y el romero y cocine hasta que estén suaves.Sube el fuego, agregue la carne y cocine hasta que se dore por todas partes.Agregue el vino y los tomates picados y llevar a fuego lento.Cocine suavemente durante 20-25 minutos, o hasta que la salsa esté rica y reducida.Condimentar con sal y pimienta.
@@ -128,11 +128,11 @@ Para servir, cocine la tagliatelle durante 2-3 minutos, o hasta que al dente, lu
   ), 
   (
     '285aa368-0f22-4771-bfe2-6dc857220235', 
-    'Porcini (CEP) Lasaña', ARRAY[ 'Al menos 500 g/1 lb 2oz Porcini fresco u otro boletus (idealmente dos veces esa cantidad)', 
-    '275g/10oz Parma jamón, cortado muy finamente', 
+    'porcini (CEP) lasaña', ARRAY[ 'Al menos 500 g/1 lb 2oz porcini fresco u otro boletus (idealmente dos veces esa cantidad)', 
+    '275g/10oz parma jamón, cortado muy finamente', 
     'Las láminas de lasaña blanca, idealmente frescas, pero se pueden usar secas (lo suficiente para hacer al menos 3 capas en una bandeja para hornear de 20 cmx25cm/8x10in)', 
     'Al menos 250g/9 oz de parmesano fresco', 
-    'Aceite de trufa (opcional)', 'manteca' ], 
+    'aceite de trufa (opcional)', 'manteca' ], 
     'Para hacer la salsa de chamelo bé, mezcle la harina con la mantequilla derretida en la sartén y cocínela durante unos minutos.Agregue la leche caliente por grados y revuelva para espesar.Lleve a ebullición y deje a fuego lento por un minuto.Sazone con nuez moscada, sal y pimienta.
 Retire la mitad del parmesano y revuelva en el bé chamel.El BecheMel terminado debe ser una consistencia de vertido gruesa.Agregue un poco más de leche caliente si es necesario.
 Para preparar el resto de los ingredientes, corte todo el boleto en rodajas grandes pero muy delgadas.Si está utilizando lasaña seca del tipo que requiere cocineros previos, cocine de acuerdo con las instrucciones.Raspe el resto del parmesano en virutas con una cuchilla grande o pelado de papas.
@@ -143,12 +143,12 @@ Hornee durante unos 20-30 minutos en un horno bastante caliente (190C/375F/Gas 5
   ), 
   (
     'd8512230-c0d2-42c2-856b-19ae526eb104', 
-    'Pudín de gofres de frambuesa y chocolate blanco', 
+    'Pudín de waffles de frambuesa y chocolate blanco', 
     ARRAY[ 'mantequilla, para engrasar', 
-    'Waffles de paquetes de 300 g/10½ oz, cortado en cuadrados de 2.5 cm/1 pulgada', 
-    '300G/10½OZ frambuesas', 'Chocolate blanco de 150 g/½oz, cortado en cubos de 0.5 cm/¼ pulgadas', 
+    'waffles de paquetes de 300 g/10½ oz, cortado en cuadrados de 2.5 cm/1 pulgada', 
+    '300G/10½OZ frambuesas', 'chocolate blanco de 150 g/½oz, cortado en cubos de 0.5 cm/¼ pulgadas', 
     '500ml/18fl oz crème fraîche o crema agria', 
-    '55G/2OZ Azúcar Caster', '1 cucharada de harina lisa', 
+    '55G/2OZ azúcar Caster', '1 cucharada de harina lisa', 
     '½ cucharadita de extracto de vainilla', 
     '3 huevos de rango libre, batidos', 
     '2 cucharadas de azúcar de glaseado' ], 
@@ -185,12 +185,12 @@ Por último, agregue el queso rallado y la mantequilla, espolvoree con perejil p
     'Chasseur de pollo con puré cremoso', 
     ARRAY[ '1 x 1.5 kg/3 lb 5 oz de pollo, cortado en 8 piezas', 
     'sal y pimienta negra recién molida', 
-    'Harina lisa de 50 g/2oz', '2 cucharadas de aceite de oliva', 
+    'harina lisa de 50 g/2oz', '2 cucharadas de aceite de oliva', 
     '115g/4oz mantequilla', '110G/4oz tocino rayado ahumado, cortado en lardones', 
     '150 g/5½ oz de hongos de botón', 
     '150 g/5½ oz -chalotes, en rodajas gruesas', 
     '55G/2OZ Azúcar Caster', '175ml/6fl oz de vino blanco', 
-    'Caldo de pollo de 300 ml/10fl oz', 
+    'caldo de pollo de 300 ml/10fl oz', 
     '2 cucharadas de tomate puré', 
     '2 cucharadas de estragón, finamente picado', 
     '2 tomates, desollados, sembrados y picados', 
