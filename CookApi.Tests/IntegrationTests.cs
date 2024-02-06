@@ -19,7 +19,7 @@ public class IntegrationTests
     public async Task Recipes_ReturnRecipes()
     {
         var response = await _httpClient.GetAsync("/recipes");
-        var recipes = await response.Content.ReadFromJsonAsync<List<Recipe>>();
+        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
 
         Assert.IsNotNull(recipes, "The list of recipes should not be null");
         Assert.IsTrue(recipes.Count > 0, "The list of recipes should not be empty");
@@ -32,7 +32,7 @@ public class IntegrationTests
         var limitQueryParameter = $"limit={limit}";
 
         var response = await _httpClient.GetAsync("/recipes?" + limitQueryParameter);
-        var recipes = await response.Content.ReadFromJsonAsync<List<Recipe>>();
+        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
         var recipesCount = recipes?.Count;
 
         Assert.IsTrue(recipesCount == 10, $"Expected {limit} recipes, but got {recipesCount}");
@@ -45,7 +45,7 @@ public class IntegrationTests
         var nameQueryParameter = $"name={name}";
 
         var response = await _httpClient.GetAsync("/recipes?" + nameQueryParameter);
-        var recipes = await response.Content.ReadFromJsonAsync<List<Recipe>>();
+        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
 
         Assert.IsTrue(
             recipes?.All(r => r.Name.ToLower().Contains("salad")),
@@ -59,7 +59,7 @@ public class IntegrationTests
         var ingredientsQueryParameter = $"ingredients={ingredientsToBeSearchedFor[0]}&ingredients={ingredientsToBeSearchedFor[1]}";
 
         var response = await _httpClient.GetAsync("/recipes?" + ingredientsQueryParameter);
-        var recipes = await response.Content.ReadFromJsonAsync<List<Recipe>>();
+        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
 
         Assert.IsTrue(recipes.Count > 0, "Zero recipes were returned");
         Assert.IsTrue(
@@ -71,10 +71,34 @@ public class IntegrationTests
     }
 
     [TestMethod]
+    public async Task Recipes_ReturnRecipeByDifficulty()
+    {
+        RecipeDifficulty difficulty = RecipeDifficulty.Easy;
+        var difficultyQueryParameter = $"difficulty={difficulty}";
+
+        var response = await _httpClient.GetAsync("/recipes?" + difficultyQueryParameter);
+        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
+
+        Assert.IsTrue(recipes.Count > 0, "Zero recipes were returned");
+        Assert.IsTrue(recipes.All(r => r.Difficulty == "Easy"));
+    }
+
+    [TestMethod]
+    public async Task Recipes_ReturnRecipeByDifficulty_UsingInvalidQueryParameter()
+    {
+        string difficulty = "impossible";
+        var difficultyQueryParameter = $"difficulty={difficulty}";
+
+        var response = await _httpClient.GetAsync("/recipes?" + difficultyQueryParameter);
+
+        Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.BadRequest);
+    }
+
+    [TestMethod]
     public async Task Recipes_ReturnRecipeById()
     {
         var response = await _httpClient.GetAsync("/recipes/:id");
-        var recipe = await response.Content.ReadFromJsonAsync<Recipe>();
+        var recipe = await response.Content.ReadFromJsonAsync<RecipeDTO>();
 
         Assert.IsNotNull(recipe, "Recipe should not be null");
     }
