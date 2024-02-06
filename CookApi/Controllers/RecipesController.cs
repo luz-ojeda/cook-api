@@ -13,6 +13,8 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
     private readonly ILogger<RecipesController> _logger = logger;
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<RecipeDTO>>> GetRecipes(
         [FromQuery] int limit = 10,
         [FromQuery] int skip = 0,
@@ -59,6 +61,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
     public async Task<ActionResult<RecipeDTO>> GetRecipeById()
     {
         var recipes = await _context.Recipes.ToListAsync();
+        
         return RecipeToDTO(recipes.FirstOrDefault());
     }
 
@@ -74,7 +77,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
            PreparationTime = recipe.PreparationTime,
            CookingTime = recipe.CookingTime,
            Servings = recipe.Servings,
-           Difficulty = recipe.Difficulty.ToString(),
+           Difficulty = recipe.Difficulty?.ToString(),
            Vegetarian = recipe.Vegetarian
        };
 }

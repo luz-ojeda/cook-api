@@ -61,7 +61,7 @@ public class IntegrationTests
         var response = await _httpClient.GetAsync("/recipes?" + ingredientsQueryParameter);
         var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
 
-        Assert.IsTrue(recipes.Count > 0, "Zero recipes were returned");
+        Assert.IsTrue(recipes?.Count > 0, "Zero recipes were returned");
         Assert.IsTrue(
             recipes?.All(
                 r => ingredientsToBeSearchedFor.Any(
@@ -79,7 +79,7 @@ public class IntegrationTests
         var response = await _httpClient.GetAsync("/recipes?" + difficultyQueryParameter);
         var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
 
-        Assert.IsTrue(recipes.Count > 0, "Zero recipes were returned");
+        Assert.IsTrue(recipes?.Count > 0, "Zero recipes were returned");
         Assert.IsTrue(recipes.All(r => r.Difficulty == "Easy"));
     }
 

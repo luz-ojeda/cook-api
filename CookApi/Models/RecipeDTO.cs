@@ -1,3 +1,5 @@
+namespace CookApi.Models;
+
 public class RecipeDTO
 {
     public Guid Id { get; set; }
@@ -18,7 +20,7 @@ public class RecipeDTO
 
     public int? Servings { get; set; }
 
-    public string Difficulty { get; set; }
+    public string? Difficulty { get; set; }
 
     public bool Vegetarian { get; set; }
 }
