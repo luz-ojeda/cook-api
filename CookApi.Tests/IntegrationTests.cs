@@ -1,4 +1,5 @@
 using CookApi.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Http.Json;
 
@@ -28,14 +29,14 @@ public class IntegrationTests
     [TestMethod]
     public async Task Recipes_ReturnPaginatedRecipes()
     {
-        var limit = 10;
+        var limit = 5;
         var limitQueryParameter = $"limit={limit}";
 
         var response = await _httpClient.GetAsync("/recipes?" + limitQueryParameter);
         var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
         var recipesCount = recipes?.Count;
 
-        Assert.IsTrue(recipesCount == 10, $"Expected {limit} recipes, but got {recipesCount}");
+        Assert.IsTrue(recipesCount == limit, $"Expected {limit} recipes, but got {recipesCount}");
     }
 
     [TestMethod]
@@ -95,11 +96,42 @@ public class IntegrationTests
     }
 
     [TestMethod]
-    public async Task Recipes_ReturnRecipeById()
+    public async Task Recipes_ReturnRecipeByName()
     {
-        var response = await _httpClient.GetAsync("/recipes/:id");
+        string name = new("Vegetable lasaGnA");
+        var response = await _httpClient.GetAsync("/recipes/name/" + name);
         var recipe = await response.Content.ReadFromJsonAsync<RecipeDTO>();
 
         Assert.IsNotNull(recipe, "Recipe should not be null");
+        Assert.IsTrue(recipe.Name.ToLower() == name.ToLower(), "Recipe's nameis not the same as provided in the query path");
+    }
+
+    [TestMethod]
+    public async Task Recipes_ReturnRecipeByName_NotFound()
+    {
+        string name = new("pastafrola");
+        var response = await _httpClient.GetAsync("/recipes/name/" + name);
+
+        Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.NotFound);
+    }
+
+    [TestMethod]
+    public async Task Recipes_ReturnRecipeById()
+    {
+        Guid id = new ("f6f3e96b-8583-4cda-8fc6-9f260fb6bc09");
+        var response = await _httpClient.GetAsync("/recipes/" + id);
+        var recipe = await response.Content.ReadFromJsonAsync<RecipeDTO>();
+
+        Assert.IsNotNull(recipe, "Recipe should not be null");
+        Assert.IsTrue(recipe.Id == id, "Recipe's id is not the same as provided in the query path");
+    }
+
+    [TestMethod]
+    public async Task Recipes_ReturnRecipeById_NotFound()
+    {
+        Guid id = new("f6f3e96b-8583-4cda-8fc6-1f234fb5bc67");
+        var response = await _httpClient.GetAsync("/recipes/" + id);
+
+        Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.NotFound);
     }
 }

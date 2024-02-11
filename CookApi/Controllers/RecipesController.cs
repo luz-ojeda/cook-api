@@ -23,7 +23,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         [FromQuery] RecipeDifficulty? difficulty = null
     )
     {
-        IQueryable<Recipe> query = _context.Recipes.AsQueryable();
+        IQueryable<Recipe> query = _context.Recipes.AsQueryable().AsNoTracking();
 
         if (!string.IsNullOrEmpty(name))
         {
@@ -57,13 +57,36 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         return recipes.Select(recipe => RecipeToDTO(recipe)).ToList();
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<RecipeDTO>> GetRecipeById()
+    [HttpGet("name/{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<RecipeDTO>> GetRecipeByName(string name)
     {
-        var recipes = await _context.Recipes.ToListAsync();
+        var recipe = await _context.Recipes.Where(r => r.Name.ToLower() == name.ToLower()).FirstOrDefaultAsync();
+
+        if (recipe == null)
+        {
+            return NotFound();
+        }
         
-        return RecipeToDTO(recipes.FirstOrDefault());
+        return RecipeToDTO(recipe);
     }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<RecipeDTO>> GetRecipeById(Guid id)
+    {
+        var recipe = await _context.Recipes.FindAsync(id);
+
+        if (recipe == null)
+        {
+            return NotFound();
+        }
+        
+        return RecipeToDTO(recipe);
+    }
+
 
     private static RecipeDTO RecipeToDTO(Recipe recipe) =>
        new RecipeDTO
