@@ -52,9 +52,13 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
             query = query.Where(recipe => recipe.Difficulty == difficulty);
         }
 
-        var recipes = await query.Skip(skip).Take(limit).ToListAsync();
+        var recipes = await query
+            .Skip(skip)
+            .Take(limit)
+            .Select(recipe => RecipeToDTO(recipe))
+            .ToListAsync();
 
-        return recipes.Select(recipe => RecipeToDTO(recipe)).ToList();
+        return recipes;
     }
 
     [HttpGet("name/{name}")]
@@ -68,7 +72,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         {
             return NotFound();
         }
-        
+
         return RecipeToDTO(recipe);
     }
 
@@ -83,7 +87,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         {
             return NotFound();
         }
-        
+
         return RecipeToDTO(recipe);
     }
 
