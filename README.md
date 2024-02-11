@@ -19,6 +19,7 @@
 - [Running without Docker](#running-the-api-without-docker)
 - [Running with Docker](#running-the-api-with-docker)
 - [API Documentation](#api-documentation)
+- [Postman Collection](#postman-collection)
 - [Testing](#testing)
 
 ## Getting Started
@@ -96,6 +97,10 @@ This API is self-documented using Swagger. With the project running, you can acc
 
 `http://localhost:5255/swagger` without Docker or
 `http://localhost:8080/swagger` with Docker
+
+## Postman Collection
+
+You can find the Postman collection for this API [here](https://api.postman.com/collections/12774422-fa74b2ab-72af-4313-bcfb-dadbd3c5a617?access_key=PMAT-01HPCDDQVQR6J5A9EVP1CWH25T).
 
 ## Testing
 
