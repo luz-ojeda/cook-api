@@ -1,16 +1,15 @@
 # Cook API
 
+[![es](https://img.shields.io/badge/lang-es-red)](https://github.com/luz-ojeda/cook-api/blob/main/README.es.md)
+
 .NET-based application that serves as a simple and convenient platform for managing and retrieving cooking recipes.
 
 ## Features
 
 - Recipe Management: Create, Read, Update, and Delete (CRUD) operations for recipes.
-- Search Functionality: Search for recipes by name, difficulty, tags, and ingredients.
+- Search Functionality: Search for recipes by name, difficulty and ingredients.
 - Substitution Suggestions: Receive recommendations for ingredient substitutions.
 - Difficulty Level: Assign difficulty levels to recipes.
-- Tags and Categories: Categorize recipes with tags for easy organization.
-- Ingredients Scaling: Easily convert recipes to different serving sizes.
-- Copy-Paste Functionality: Seamlessly copy and paste ingredients and instructions.
 
 ## Table of Contents
 
@@ -68,6 +67,7 @@ Inside the `appsettings.Development.json` file, locate the `ConnectionStrings` p
    ```bash
    dotnet run
    ```
+
 ### Running the API with Docker
 
 1. Clone the repository:
@@ -83,7 +83,7 @@ Inside the `appsettings.Development.json` file, locate the `ConnectionStrings` p
    docker-compose up --build
    ```
 
-   This command will create and start Docker containers for the PostgreSQL database and the  API as spcified in the `compose.yaml` file. The --build flag ensures that Docker Compose   builds the necessary images.
+   This command will create and start two Docker containers. One for the PostgreSQL database and another one for the API as specified in the `compose.yaml` file. The `--build` flag ensures that Docker Compose builds the necessary images.
 
    The API is configured to receive requests on localhost port 8080.
 
