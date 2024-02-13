@@ -91,7 +91,6 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         return RecipeToDTO(recipe);
     }
 
-
     private static RecipeDTO RecipeToDTO(Recipe recipe) =>
        new RecipeDTO
        {
