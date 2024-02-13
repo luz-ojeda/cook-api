@@ -3,11 +3,22 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var isDevelopment = builder.Environment.IsDevelopment();
+
+var corsPolicyName = "AllowFrontFrontEndCookweb";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicyName,
+                      policy  =>
+                      {
+                          policy.WithOrigins(isDevelopment ? "http://localhost:5173" : ""); // TODO: Update when deployed
+                      });
+});
+
 builder.Services.AddControllers()
     .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
 
 // Add services to the container.
-var isDevelopment = builder.Environment.IsDevelopment();
 var conn = builder.Configuration.GetConnectionString(isDevelopment ? "Development" : "");
 
 builder.Services.AddDbContext<CookApi.Data.CookApiDbContext>(options =>
@@ -29,6 +40,8 @@ if (isDevelopment)
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(corsPolicyName);
 
 app.UseAuthorization();
 
