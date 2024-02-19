@@ -2,6 +2,7 @@ using CookApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Http.Json;
+using System.Xml.Linq;
 
 namespace CookApi.Tests;
 
@@ -72,7 +73,7 @@ public class IntegrationTests
     }
 
     [TestMethod]
-    public async Task Recipes_ReturnRecipeByDifficulty()
+    public async Task Recipes_ReturnRecipesByDifficulty()
     {
         RecipeDifficulty difficulty = RecipeDifficulty.Easy;
         var difficultyQueryParameter = $"difficulty={difficulty}";
@@ -85,7 +86,7 @@ public class IntegrationTests
     }
 
     [TestMethod]
-    public async Task Recipes_ReturnRecipeByDifficulty_UsingInvalidQueryParameter()
+    public async Task Recipes_ReturnRecipesByDifficulty_UsingInvalidQueryParameter()
     {
         string difficulty = "impossible";
         var difficultyQueryParameter = $"difficulty={difficulty}";
@@ -93,6 +94,39 @@ public class IntegrationTests
         var response = await _httpClient.GetAsync("/recipes?" + difficultyQueryParameter);
 
         Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.BadRequest);
+    }
+
+    [TestMethod]
+    public async Task Recipes_ReturnRecipesByListOfIds()
+    {
+        List<Guid> idsToSeachFor = [
+            new Guid("f6f3e96b-8583-4cda-8fc6-9f260fb6bc09"),
+            new Guid("c7393218-9029-4990-818f-d4f72d53e793"),
+            new Guid("54a8e08b-8c88-4d67-8aa0-70330c4a2156")];
+        var idsQueryParameter = $"ids={idsToSeachFor[0]}&ids={idsToSeachFor[1]}&ids={idsToSeachFor[2]}";
+
+        var response = await _httpClient.GetAsync("/recipes?" + idsQueryParameter);
+        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
+        Assert.IsTrue(recipes?.Count > 0, "Zero recipes were returned");
+        Assert.IsTrue(
+            recipes.All(
+                r => idsToSeachFor.Any(
+                    id => id == r.Id
+                ))); // For all recipes there is at least one matching Id in the list of array of Ids used in the query
+    }
+
+    [TestMethod]
+    public async Task Recipes_ReturnRecipesByListOfIds_NotFound()
+    {
+        List<Guid> idsToSeachFor = [
+            new Guid("a6f3e96b-8583-4cda-8fc6-9f260fb6bc09"),
+            new Guid("a7393218-9029-4990-818f-d4f72d53e793"),
+            new Guid("a4a8e08b-8c88-4d67-8aa0-70330c4a2156")];
+        var idsQueryParameter = $"ids={idsToSeachFor[0]}&ids={idsToSeachFor[1]}&ids={idsToSeachFor[2]}";
+
+        var response = await _httpClient.GetAsync("/recipes?" + idsQueryParameter);
+        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
+        Assert.IsTrue(recipes?.Count == 0, "More than one recipe were returned");
     }
 
     [TestMethod]
@@ -107,7 +141,7 @@ public class IntegrationTests
     }
 
     [TestMethod]
-    public async Task Recipes_ReturnRecipeByName_NotFound()
+    public async Task Recipes_ReturnRecipesByName_NotFound()
     {
         string name = new("pastafrola");
         var response = await _httpClient.GetAsync("/recipes/name/" + name);
@@ -118,7 +152,7 @@ public class IntegrationTests
     [TestMethod]
     public async Task Recipes_ReturnRecipeById()
     {
-        Guid id = new ("f6f3e96b-8583-4cda-8fc6-9f260fb6bc09");
+        Guid id = new("f6f3e96b-8583-4cda-8fc6-9f260fb6bc09");
         var response = await _httpClient.GetAsync("/recipes/" + id);
         var recipe = await response.Content.ReadFromJsonAsync<RecipeDTO>();
 

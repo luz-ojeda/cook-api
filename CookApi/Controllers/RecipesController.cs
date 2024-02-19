@@ -20,7 +20,8 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         [FromQuery] int skip = 0,
         [FromQuery] string? name = null,
         [FromQuery] string[]? ingredients = null,
-        [FromQuery] RecipeDifficulty? difficulty = null
+        [FromQuery] RecipeDifficulty? difficulty = null,
+        [FromQuery] string[]? ids = null
     )
     {
         IQueryable<Recipe> query = _context.Recipes.AsQueryable().AsNoTracking();
@@ -50,6 +51,15 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         if (difficulty != null)
         {
             query = query.Where(recipe => recipe.Difficulty == difficulty);
+        }
+
+        if (ids != null && ids?.Length != 0)
+        {
+            foreach (string id in ids)
+            {
+                query = query.Where(recipe => ids.Contains(recipe.Id.ToString()));
+            }
+
         }
 
         var recipes = await query
