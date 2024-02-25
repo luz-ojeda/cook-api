@@ -84,6 +84,9 @@ namespace CookApi.Migrations
                     b.Property<int?>("Servings")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Summary")
+                        .HasColumnType("text");
+
                     b.Property<bool>("Vegetarian")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")

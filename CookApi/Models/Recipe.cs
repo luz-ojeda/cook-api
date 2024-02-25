@@ -12,6 +12,7 @@ public class Recipe
     public Guid Id { get; set; }
 
     public required string Name { get; set; }
+    public string? Summary { get; set; }
 
     public required List<string> Ingredients { get; set; }
 
