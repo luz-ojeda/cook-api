@@ -106,6 +106,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
        {
            Id = recipe.Id,
            Name = recipe.Name,
+           Summary = recipe.Summary,
            Ingredients = recipe.Ingredients,
            Instructions = recipe.Instructions,
            Pictures = recipe.Pictures,

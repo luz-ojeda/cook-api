@@ -32,6 +32,10 @@ public class CookApiDbContext : DbContext
                 .HasMaxLength(150);
 
             modelBuilder.Entity<Recipe>()
+                .Property(r => r.Summary)
+                .HasMaxLength(150);
+
+            modelBuilder.Entity<Recipe>()
                 .Property(r => r.Ingredients)
                 .HasColumnType("varchar(200)[]");
 
