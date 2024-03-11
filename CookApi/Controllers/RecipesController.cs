@@ -20,7 +20,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         [FromQuery] int skip = 0,
         [FromQuery] string? name = null,
         [FromQuery] string[]? ingredients = null,
-        [FromQuery] RecipeDifficulty? difficulty = null,
+        [FromQuery] RecipeDifficulty?[]? difficulty = null,
         [FromQuery] string[]? ids = null
     )
     {
@@ -50,7 +50,8 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
 
         if (difficulty != null)
         {
-            query = query.Where(recipe => recipe.Difficulty == difficulty);
+            var difficultyFilter = difficulty.ToArray();
+            query = query.Where(recipe => difficultyFilter.Contains(recipe.Difficulty));
         }
 
         if (ids != null && ids?.Length != 0)

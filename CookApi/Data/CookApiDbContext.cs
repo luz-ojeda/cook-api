@@ -1,5 +1,6 @@
 using CookApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CookApi.Data;
 
@@ -51,9 +52,7 @@ public class CookApiDbContext : DbContext
 
             modelBuilder.Entity<Recipe>()
                 .Property(r => r.Difficulty)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (RecipeDifficulty)Enum.Parse(typeof(RecipeDifficulty), v))
+                .HasConversion(new EnumToStringConverter<RecipeDifficulty>())
                 .HasMaxLength(6);
 
             modelBuilder.Entity<Recipe>()
