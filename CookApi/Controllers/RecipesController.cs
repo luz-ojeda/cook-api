@@ -24,7 +24,10 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         [FromQuery] string[]? ids = null
     )
     {
-        IQueryable<Recipe> query = _context.Recipes.AsQueryable().AsNoTracking();
+        IQueryable<Recipe> query = _context.Recipes
+                                        .AsQueryable()
+                                        .AsNoTracking()
+                                        .OrderByDescending(recipe => recipe.Pictures.Count != 0);
 
         if (!string.IsNullOrEmpty(name))
         {
@@ -76,7 +79,10 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RecipeDTO>> GetRecipeByName(string name)
     {
-        var recipe = await _context.Recipes.Where(r => r.Name.ToLower() == name.ToLower()).FirstOrDefaultAsync();
+        var recipe = await _context.Recipes
+                        .AsNoTracking()
+                        .Where(r => r.Name.ToLower() == name.ToLower())
+                        .FirstOrDefaultAsync();
 
         if (recipe == null)
         {
