@@ -85,7 +85,8 @@ namespace CookApi.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Summary")
-                        .HasColumnType("text");
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
 
                     b.Property<bool>("Vegetarian")
                         .ValueGeneratedOnAdd()
