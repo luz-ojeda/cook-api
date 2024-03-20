@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpLogging(o =>
+    {
+        o.LoggingFields = HttpLoggingFields.RequestMethod |
+                      HttpLoggingFields.RequestPath |
+                      HttpLoggingFields.RequestQuery |
+                      HttpLoggingFields.RequestBody;
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,6 +46,7 @@ if (isDevelopment)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseHttpLogging();
 }
 
 app.UseHttpsRedirection();
