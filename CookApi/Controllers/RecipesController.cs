@@ -21,7 +21,8 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         [FromQuery] string? name = null,
         [FromQuery] string[]? ingredients = null,
         [FromQuery] RecipeDifficulty?[]? difficulty = null,
-        [FromQuery] string[]? ids = null
+        [FromQuery] string[]? ids = null,
+        [FromQuery] bool onlyVegetarian = false
     )
     {
         IQueryable<Recipe> query = _context.Recipes
@@ -63,7 +64,11 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
             {
                 query = query.Where(recipe => ids.Contains(recipe.Id.ToString()));
             }
+        }
 
+        if (onlyVegetarian)
+        {
+            query = query.Where(recipe => recipe.Vegetarian);
         }
 
         var recipes = await query
