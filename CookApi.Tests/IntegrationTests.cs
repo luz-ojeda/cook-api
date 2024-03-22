@@ -96,6 +96,18 @@ public class IntegrationTests
     }
 
     [TestMethod]
+    public async Task Recipes_ReturnOnlyVegetarianRecipes()
+    {
+        var onlyVegetarianQueryParameter = $"onlyVegetarian=true";
+
+        var response = await _httpClient.GetAsync("/recipes?" + onlyVegetarianQueryParameter);
+        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
+
+        Assert.IsTrue(recipes.All(r => r.Vegetarian == true), "Not all recipes returned were vegetarian");
+
+    }
+
+    [TestMethod]
     public async Task Recipes_ReturnRecipesByListOfIds()
     {
         List<Guid> idsToSeachFor = [
