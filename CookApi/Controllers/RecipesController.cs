@@ -1,4 +1,5 @@
 using CookApi.Data;
+using CookApi.DTOs;
 using CookApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,9 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<RecipeDTO>>> GetRecipes(
+    public async Task<ActionResult<PaginatedList<RecipeDTO>>> GetRecipes(
         [FromQuery] int limit = 10,
-        [FromQuery] int skip = 0,
+        [FromQuery] int page = 1,
         [FromQuery] string? name = null,
         [FromQuery] string[]? ingredients = null,
         [FromQuery] RecipeDifficulty?[]? difficulty = null,
@@ -25,10 +26,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         [FromQuery] bool onlyVegetarian = false
     )
     {
-        IQueryable<Recipe> query = _context.Recipes
-                                        .AsQueryable()
-                                        .AsNoTracking()
-                                        .OrderByDescending(recipe => recipe.Pictures.Count != 0);
+        IQueryable<Recipe> query = _context.Recipes.AsQueryable();
 
         if (!string.IsNullOrEmpty(name))
         {
@@ -71,13 +69,12 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
             query = query.Where(recipe => recipe.Vegetarian);
         }
 
-        var recipes = await query
-            .Skip(skip)
-            .Take(limit)
+        var recipes = query
+            .OrderBy(r => r.Id)
             .Select(recipe => RecipeToDTO(recipe))
-            .ToListAsync();
+            .AsNoTracking();
 
-        return recipes;
+        return await PaginatedList<RecipeDTO>.CreateAsync(recipes, page, limit);
     }
 
     [HttpGet("name/{name}")]
@@ -114,7 +111,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
     }
 
     private static RecipeDTO RecipeToDTO(Recipe recipe) =>
-       new RecipeDTO
+       new()
        {
            Id = recipe.Id,
            Name = recipe.Name,
