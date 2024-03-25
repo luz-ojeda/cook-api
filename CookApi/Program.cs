@@ -10,9 +10,9 @@ var corsPolicyName = "AllowFrontFrontEndCookweb";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: corsPolicyName,
-                      policy =>
+                      policy  =>
                       {
-                          policy.WithOrigins(isDevelopment ? ["http://localhost:5173", "http://localhost:5174"] : []); // TODO: Update when deployed
+                          policy.WithOrigins(isDevelopment ? "http://localhost:5173" : ""); // TODO: Update when deployed
                       });
 });
 
