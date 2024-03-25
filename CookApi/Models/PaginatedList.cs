@@ -24,12 +24,12 @@ public class PaginatedList<T>
 
 public class Pagination
 {
-    public Pagination(int pageNumber, int pageSize, int count)
+    public Pagination(int pageNumber, int pageSize, int totalRecords)
     {
         PageNumber = pageNumber;
         PageSize = pageSize;
-        TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-        TotalRecords = count;
+        TotalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+        TotalRecords = totalRecords;
     }
 
     public int PageNumber { get; init; }

@@ -21,10 +21,10 @@ public class IntegrationTests
     public async Task Recipes_ReturnRecipes()
     {
         var response = await _httpClient.GetAsync("/recipes");
-        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
+        var paginatedList = await response.Content.ReadFromJsonAsync<PaginatedList<RecipeDTO>>();
 
-        Assert.IsNotNull(recipes, "The list of recipes should not be null");
-        Assert.IsTrue(recipes.Count > 0, "The list of recipes should not be empty");
+        Assert.IsNotNull(paginatedList, "The list of recipes should not be null");
+        Assert.IsTrue(paginatedList.Data.Count > 0, "The list of recipes should not be empty");
     }
 
     [TestMethod]
@@ -34,10 +34,35 @@ public class IntegrationTests
         var limitQueryParameter = $"limit={limit}";
 
         var response = await _httpClient.GetAsync("/recipes?" + limitQueryParameter);
-        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
-        var recipesCount = recipes?.Count;
+        var paginatedList = await response.Content.ReadFromJsonAsync<PaginatedList<RecipeDTO>>();
 
-        Assert.IsTrue(recipesCount == limit, $"Expected {limit} recipes, but got {recipesCount}");
+        Assert.IsNotNull(paginatedList, "The list of recipes should not be null");
+        Assert.IsTrue(
+            paginatedList.Data.Count == limit,
+            $"Expected {limit} recipes, but got {paginatedList.Data.Count}");
+        Assert.IsTrue(
+            paginatedList.Pagination.PageSize == limit,
+            $"Expected {limit} page size value in Pagination but got {paginatedList.Pagination.PageSize}");
+    }
+
+    [TestMethod]
+    public async Task Recipes_ReturnEmptyListIfPastLastPage()
+    {
+        var firstResponse = await _httpClient.GetAsync("/recipes");
+        var firstPaginatedList = await firstResponse.Content.ReadFromJsonAsync<PaginatedList<RecipeDTO>>();
+
+        Assert.IsNotNull(firstPaginatedList, "The list of recipes should not be null");
+
+        var page = firstPaginatedList.Pagination.TotalPages + 1;
+        var pageQueryParameter = $"page={page}";
+
+        var secondResponse = await _httpClient.GetAsync("/recipes?" + pageQueryParameter);
+        var secondPaginatedList = await secondResponse.Content.ReadFromJsonAsync<PaginatedList<RecipeDTO>>();
+
+        Assert.IsNotNull(secondPaginatedList, "The list of recipes should not be null");
+        Assert.IsTrue(
+            secondPaginatedList.Data.Count == 0,
+            $"Expected 0 recipes, but got {secondPaginatedList.Data.Count}");
     }
 
     [TestMethod]
@@ -47,10 +72,11 @@ public class IntegrationTests
         var nameQueryParameter = $"name={name}";
 
         var response = await _httpClient.GetAsync("/recipes?" + nameQueryParameter);
-        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
+        var paginatedList = await response.Content.ReadFromJsonAsync<PaginatedList<RecipeDTO>>();
 
+        Assert.IsNotNull(paginatedList, "The list of recipes should not be null");
         Assert.IsTrue(
-            recipes?.All(r => r.Name.ToLower().Contains("salad")),
+            paginatedList.Data.All(r => r.Name.ToLower().Contains("salad")),
             "Not all recipes contain the string used for searching in their name");
     }
 
@@ -61,11 +87,12 @@ public class IntegrationTests
         var ingredientsQueryParameter = $"ingredients={ingredientsToBeSearchedFor[0]}&ingredients={ingredientsToBeSearchedFor[1]}";
 
         var response = await _httpClient.GetAsync("/recipes?" + ingredientsQueryParameter);
-        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
+        var paginatedList = await response.Content.ReadFromJsonAsync<PaginatedList<RecipeDTO>>();
 
-        Assert.IsTrue(recipes?.Count > 0, "Zero recipes were returned");
+        Assert.IsNotNull(paginatedList, "The list of recipes should not be null");
+        Assert.IsTrue(paginatedList.Data.Count > 0, "Zero recipes were returned");
         Assert.IsTrue(
-            recipes?.All(
+            paginatedList.Data.All(
                 r => ingredientsToBeSearchedFor.Any(
                     i => r.Ingredients.Any(
                         recipeIngredient => recipeIngredient.Contains(i.ToLower())))),
@@ -79,10 +106,11 @@ public class IntegrationTests
         var difficultyQueryParameter = $"difficulty={difficulty}";
 
         var response = await _httpClient.GetAsync("/recipes?" + difficultyQueryParameter);
-        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
+        var recipes = await response.Content.ReadFromJsonAsync<PaginatedList<RecipeDTO>>();
 
-        Assert.IsTrue(recipes?.Count > 0, "Zero recipes were returned");
-        Assert.IsTrue(recipes.All(r => r.Difficulty == "Easy"));
+        Assert.IsNotNull(recipes, "The list of recipes should not be null");
+        Assert.IsTrue(recipes.Data.Count > 0, "Zero recipes were returned");
+        Assert.IsTrue(recipes.Data.All(r => r.Difficulty == "Easy"));
     }
 
     [TestMethod]
@@ -102,10 +130,12 @@ public class IntegrationTests
         var onlyVegetarianQueryParameter = $"onlyVegetarian=true";
 
         var response = await _httpClient.GetAsync("/recipes?" + onlyVegetarianQueryParameter);
-        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
+        var paginatedList = await response.Content.ReadFromJsonAsync<PaginatedList<RecipeDTO>>();
 
-        Assert.IsTrue(recipes.All(r => r.Vegetarian == true), "Not all recipes returned were vegetarian");
-
+        Assert.IsNotNull(paginatedList, "The list of recipes should not be null");
+        Assert.IsTrue(
+            paginatedList.Data.All(r => r.Vegetarian == true),
+            "Not all recipes returned were vegetarian");
     }
 
     [TestMethod]
@@ -118,13 +148,15 @@ public class IntegrationTests
         var idsQueryParameter = $"ids={idsToSeachFor[0]}&ids={idsToSeachFor[1]}&ids={idsToSeachFor[2]}";
 
         var response = await _httpClient.GetAsync("/recipes?" + idsQueryParameter);
-        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
-        Assert.IsTrue(recipes?.Count > 0, "Zero recipes were returned");
+        var paginatedList = await response.Content.ReadFromJsonAsync<PaginatedList<RecipeDTO>>();
+
+        Assert.IsNotNull(paginatedList, "The list of recipes should not be null");
+        Assert.IsTrue(paginatedList.Data.Count > 0, "Zero recipes were returned");
         Assert.IsTrue(
-            recipes.All(
-                r => idsToSeachFor.Any(
-                    id => id == r.Id
-                ))); // For all recipes there is at least one matching Id in the list of array of Ids used in the query
+            paginatedList.Data.All(
+                recipe => idsToSeachFor.Any(
+                    id => id == recipe.Id
+                ))); // For all recipes returned there is at least one matching Id in the list of array of Ids used in the query
     }
 
     [TestMethod]
@@ -137,8 +169,43 @@ public class IntegrationTests
         var idsQueryParameter = $"ids={idsToSeachFor[0]}&ids={idsToSeachFor[1]}&ids={idsToSeachFor[2]}";
 
         var response = await _httpClient.GetAsync("/recipes?" + idsQueryParameter);
-        var recipes = await response.Content.ReadFromJsonAsync<List<RecipeDTO>>();
-        Assert.IsTrue(recipes?.Count == 0, "More than one recipe were returned");
+        var recipes = await response.Content.ReadFromJsonAsync<PaginatedList<RecipeDTO>>();
+
+        Assert.IsNotNull(recipes, "The list of recipes should not be null");
+        Assert.IsTrue(recipes.Data.Count == 0, "More than one recipe were returned");
+    }
+
+    [TestMethod]
+    public async Task Recipes_ReturnRecipesPagedAndFiltered()
+    {
+        var name = "salmon";
+        var nameQueryParameter = $"name={name}";
+
+        RecipeDifficulty difficulty = RecipeDifficulty.Easy;
+        var difficultyQueryParameter = $"difficulty={difficulty}";
+
+        List<string> ingredientsToBeSearchedFor = ["broccoli", "quinoa"];
+        var ingredientsQueryParameter = $"ingredients={ingredientsToBeSearchedFor[0]}&ingredients={ingredientsToBeSearchedFor[1]}";
+
+        var pageQueryParameter = "page=1";
+        var limitQueryParameter = "limit=3";
+
+        var response = await _httpClient.GetAsync(
+            $"/recipes?{difficultyQueryParameter}&{ingredientsQueryParameter}&{nameQueryParameter}&{pageQueryParameter}&{limitQueryParameter}");
+        var paginatedList = await response.Content.ReadFromJsonAsync<PaginatedList<RecipeDTO>>();
+
+        Assert.IsNotNull(paginatedList, "The list of recipes should not be null");
+        Assert.IsTrue(paginatedList.Data.Count != 0, "Zero recipes were returned");
+        Assert.IsTrue(
+            paginatedList.Data.All(r => r.Name.ToLower().Contains(name)),
+            "Not all recipes contain the string used for searching in their name");
+        Assert.IsTrue(
+            paginatedList.Data.All(
+                r => ingredientsToBeSearchedFor.Any(
+                    i => r.Ingredients.Any(
+                        recipeIngredient => recipeIngredient.Contains(i.ToLower())))),
+            "Not all recipes contain at least one of the specified ingredients");
+        Assert.IsTrue(paginatedList.Data.All(r => r.Difficulty == "Easy"));
     }
 
     [TestMethod]
@@ -146,10 +213,10 @@ public class IntegrationTests
     {
         string name = new("Vegetable lasaGnA");
         var response = await _httpClient.GetAsync("/recipes/name/" + name);
-        var recipe = await response.Content.ReadFromJsonAsync<RecipeDTO>();
+        var paginatedList = await response.Content.ReadFromJsonAsync<RecipeDTO>();
 
-        Assert.IsNotNull(recipe, "Recipe should not be null");
-        Assert.IsTrue(recipe.Name.ToLower() == name.ToLower(), "Recipe's nameis not the same as provided in the query path");
+        Assert.IsNotNull(paginatedList, "Recipe should not be null");
+        Assert.IsTrue(paginatedList.Name.ToLower() == name.ToLower(), "Recipe's nameis not the same as provided in the query path");
     }
 
     [TestMethod]
