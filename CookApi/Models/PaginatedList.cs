@@ -5,8 +5,12 @@ namespace CookApi.Models;
 public class PaginatedList<T>
 {
     public List<T> Data { get; set; } = [];
-    public Pagination Pagination { get; set; }
+    public Pagination? Pagination { get; set; }
 
+    public PaginatedList()
+    {
+        Data = [];
+    }
     public PaginatedList(List<T> data, Pagination pagination)
     {
         Data = data;
@@ -15,6 +19,9 @@ public class PaginatedList<T>
     public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int page, int limit)
     {
         var count = await source.CountAsync();
+
+        if (count == 0) return new PaginatedList<T>();
+
         var items = await source.Skip((page - 1) * limit).Take(limit).ToListAsync();
         var pagination = new Pagination(page, limit, count);
 

@@ -36,7 +36,8 @@ builder.Services.AddHttpLogging(o =>
         o.LoggingFields = HttpLoggingFields.RequestMethod |
                       HttpLoggingFields.RequestPath |
                       HttpLoggingFields.RequestQuery |
-                      HttpLoggingFields.RequestBody;
+                      HttpLoggingFields.RequestBody |
+                      HttpLoggingFields.Duration;
     });
 
 var app = builder.Build();
@@ -50,6 +51,15 @@ if (isDevelopment)
 }
 
 app.UseHttpsRedirection();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/error-development");
+}
+else
+{
+    app.UseExceptionHandler("/error");
+}
 
 app.UseCors(corsPolicyName);
 
