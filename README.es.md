@@ -8,7 +8,6 @@ API en .NET que sirve como una plataforma sencilla y cómoda para gestionar rece
 
 - Gestión de recetas: operaciones de creación, lectura, actualización y eliminación (CRUD) para recetas.
 - Funcionalidad de búsqueda: busque recetas por nombre, dificultad e ingredientes.
-- Sugerencias de sustitución: reciba recomendaciones para sustituciones de ingredientes.
 - Nivel de dificultad: asigna niveles de dificultad a las recetas.
 
 ## Tabla de contenidos
@@ -43,7 +42,7 @@ Si instala con [Docker](https://www.docker.com/get-started)
     ```bash
     cd cook-api/CookApi
 
-Dentro del archivo `appsettings.Development.json`, ubique la propiedad `ConnectionStrings` y actualice `Development` con la connection string de su propia base de datos.
+Dentro del archivo `appsettings.Development.json`, ubique la propiedad `ConnectionStrings` y actualice `DefaultConnection` con la connection string de su propia base de datos.
 
     ```json
     {

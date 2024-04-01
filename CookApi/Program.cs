@@ -20,7 +20,7 @@ builder.Services.AddControllers()
     .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
 
 // Add services to the container.
-var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+var conn = builder.Configuration.GetConnectionString(builder.Environment.IsEnvironment("Docker") ? "Docker" : "DefaultConnection");
 
 builder.Services.AddDbContext<CookApi.Data.CookApiDbContext>(options =>
     options.UseNpgsql(conn));

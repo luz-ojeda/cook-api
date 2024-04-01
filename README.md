@@ -7,8 +7,7 @@
 ## Features
 
 - Recipe Management: Create, Read, Update, and Delete (CRUD) operations for recipes.
-- Search Functionality: Search for recipes by name, difficulty and ingredients.
-- Substitution Suggestions: Receive recommendations for ingredient substitutions.
+- Search Functionality: Search for recipes by name, difficulty, only vegetarians and ingredients.
 - Difficulty Level: Assign difficulty levels to recipes.
 
 ## Table of Contents
@@ -44,7 +43,7 @@ If installing with Docker:
    ```bash
    cd cook-api/CookApi
 
-Inside the `appsettings.Development.json` file, locate the `ConnectionStrings` property and update `Development` with your database own connection string.
+Inside the `appsettings.Development.json` file, locate the `ConnectionStrings` property and update `DefaultConnection` with your database's own connection string.
 
    ```json
    {
