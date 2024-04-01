@@ -4,7 +4,6 @@ CREATE TABLE public."Ingredients" (
     "Substitutions" character varying(50)[] NOT NULL
 );
 
-
 ALTER TABLE public."Ingredients" OWNER TO postgres;
 
 CREATE TABLE public."Recipes" (
