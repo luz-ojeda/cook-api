@@ -49,7 +49,7 @@ Inside the `appsettings.Development.json` file, locate the `ConnectionStrings` p
    ```json
    {
      "ConnectionStrings": {
-       "Development": "Host=localhost;Username=YourUsername;Password=YourPassword;Database=YourDatabase;"
+       "DefaultConnection": "Host=localhost;Username=YourUsername;Password=YourPassword;Database=YourDatabase;"
      },
      // ...
    }

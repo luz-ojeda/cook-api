@@ -48,7 +48,7 @@ Dentro del archivo `appsettings.Development.json`, ubique la propiedad `Connecti
     ```json
     {
       "ConnectionStrings": {
-        "Development": "Host=localhost;Username=TuUsername;Password=TuPassword;Database=TuDB;"
+        "DefaultConnection": "Host=localhost;Username=TuUsername;Password=TuPassword;Database=TuDB;"
       },
       //...
     }
