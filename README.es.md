@@ -4,6 +4,8 @@
 
 API en .NET que sirve como una plataforma sencilla y cómoda para gestionar recetas de cocina.
 
+Puede encontrar una versión deployada de la aplicación web que utiliza la API [aquí](https://cook-web-weathered-thunder-7639.fly.dev/) y el repositorio para el front-end [aquí](https:/ /github.com/luz-ojeda/cook-web).
+
 ## Características
 
 - Lectura de recetas.
