@@ -6,7 +6,7 @@ API en .NET que sirve como una plataforma sencilla y cómoda para gestionar rece
 
 ## Características
 
-- Gestión de recetas: operaciones de creación, lectura, actualización y eliminación (CRUD) para recetas.
+- Lectura de recetas.
 - Funcionalidad de búsqueda: busque recetas por nombre, dificultad e ingredientes.
 - Nivel de dificultad: asigna niveles de dificultad a las recetas.
 
