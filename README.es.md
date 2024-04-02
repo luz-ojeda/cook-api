@@ -98,7 +98,7 @@ Esta API está autodocumentada mediante Swagger. Con el proyecto corriendo, pued
 
 ## Colección de Postman
 
-Puede encontrar la colección Postman para esta API [aquí](https://api.postman.com/collections/12774422-fa74b2ab-72af-4313-bcfb-dadbd3c5a617?access_key=PMAT-01HPCDDQVQR6J5A9EVP1CWH25T).
+Puede encontrar la colección Postman para esta API aquí.
 
 Utiliza `http://localhost:5255` de forma predeterminada, por lo que si elige ejecutar la API con Docker, actualice la url en las solicitudes.
 
