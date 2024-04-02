@@ -99,7 +99,7 @@ This API is self-documented using Swagger. With the project running, you can acc
 
 ## Postman Collection
 
-You can find the Postman collection for this API here.
+You can find the Postman collection for this API here
 
 It uses `http://localhost:5255` by default so if you choose to run the API with Docker, update accordingly.
 
