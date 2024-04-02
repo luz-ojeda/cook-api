@@ -4,6 +4,8 @@
 
 .NET-based application that serves as a simple and convenient platform for managing and retrieving cooking recipes.
 
+A live version of a web app using the API can be found [here](https://cook-web-weathered-thunder-7639.fly.dev/) and the repository for the front end [here](https://github.com/luz-ojeda/cook-web).
+
 ## Features
 
 - Recipe discovery: Read operation for recipes (update, delete and creation work in progress).
