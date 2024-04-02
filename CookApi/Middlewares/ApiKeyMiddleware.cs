@@ -19,7 +19,7 @@ public class ApiKeyMiddleware
                 return;
             }
 
-            var appSettings = configuration.GetValue<string>(ApiKeyHeader);
+            var appSettings = configuration.GetValue<string>("API_KEY");
             var apiKey = apiKeyHeaderValues.ToString();
 
             // Validate the API key
