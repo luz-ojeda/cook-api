@@ -53,7 +53,7 @@ if (isDevelopment)
 
 app.UseHttpsRedirection();
 
-if (!app.Environment.IsProduction())
+if (app.Environment.IsProduction())
 {
     app.UseMiddleware<ApiKeyMiddleware>();
 }
