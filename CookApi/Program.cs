@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using ApiKeyAuthentication.Middlewares;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: corsPolicyName,
                       policy =>
                       {
-                          policy.WithOrigins(isDevelopment ? ["http://localhost:5173", "http://localhost:5174"] : []); // TODO: Update when deployed
+                          policy.WithOrigins(isDevelopment ? ["http://localhost:5173", "http://localhost:5174"] : ["https://cook-web-weathered-thunder-7639.fly.dev/"]);
                       });
 });
 
@@ -52,7 +53,12 @@ if (isDevelopment)
 
 app.UseHttpsRedirection();
 
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsProduction())
+{
+    app.UseMiddleware<ApiKeyMiddleware>();
+}
+
+if (isDevelopment)
 {
     app.UseExceptionHandler("/error-development");
 }
