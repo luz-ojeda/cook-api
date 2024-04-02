@@ -6,7 +6,7 @@
 
 ## Features
 
-- Recipe discovery: Read operation for recipes (update, delete and creation work in progress).
+- Recipe management: Read and delete operations for recipes (update, delete and creation work in progress).
 - Search Functionality: Search for recipes by name, difficulty, only vegetarians and ingredients.
 - Difficulty Level: Assign difficulty levels to recipes.
 
