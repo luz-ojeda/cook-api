@@ -8,7 +8,7 @@ Puede encontrar una versión deployada de la aplicación web que utiliza la API 
 
 ## Características
 
-- Lectura de recetas.
+- Lectura y borrado de recetas.
 - Funcionalidad de búsqueda: busque recetas por nombre, dificultad e ingredientes.
 - Nivel de dificultad: asigna niveles de dificultad a las recetas.
 

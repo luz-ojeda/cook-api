@@ -8,7 +8,7 @@ A live version of a web app using the API can be found [here](https://cook-web-w
 
 ## Features
 
-- Recipe discovery: Read operation for recipes (update, delete and creation work in progress).
+- Recipe management: Read and delete operations for recipes (update, delete and creation work in progress).
 - Search Functionality: Search for recipes by name, difficulty, only vegetarians and ingredients.
 - Difficulty Level: Assign difficulty levels to recipes.
 
@@ -101,7 +101,7 @@ This API is self-documented using Swagger. With the project running, you can acc
 
 ## Postman Collection
 
-You can find the Postman collection for this API here.
+You can find the Postman collection for this API here
 
 It uses `http://localhost:5255` by default so if you choose to run the API with Docker, update accordingly.
 

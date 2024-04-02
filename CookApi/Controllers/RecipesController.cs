@@ -110,6 +110,24 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         return RecipeToDTO(recipe);
     }
 
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> DeleteRecipeById(Guid id)
+    {
+        var recipe = await _context.Recipes.FindAsync(id);
+
+        if (recipe == null)
+        {
+            return NotFound();
+        }
+
+        _context.Recipes.Remove(recipe);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
     private static RecipeDTO RecipeToDTO(Recipe recipe) =>
        new()
        {
