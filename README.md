@@ -6,7 +6,7 @@
 
 ## Features
 
-- Recipe Management: Create, Read, Update, and Delete (CRUD) operations for recipes.
+- Recipe discovery: Read operation for recipes (update, delete and creation work in progress).
 - Search Functionality: Search for recipes by name, difficulty, only vegetarians and ingredients.
 - Difficulty Level: Assign difficulty levels to recipes.
 
