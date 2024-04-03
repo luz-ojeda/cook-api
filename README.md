@@ -101,9 +101,7 @@ This API is self-documented using Swagger. With the project running, you can acc
 
 ## Postman Collection
 
-You can find the Postman collection for this API here
-
-It uses `http://localhost:5255` by default so if you choose to run the API with Docker, update accordingly.
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/12774422-fa74b2ab-72af-4313-bcfb-dadbd3c5a617?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D12774422-fa74b2ab-72af-4313-bcfb-dadbd3c5a617%26entityType%3Dcollection%26workspaceId%3D7d19834a-2f61-4ab3-b03b-dfc0aeccd911)
 
 ## Testing
 
