@@ -101,6 +101,8 @@ This API is self-documented using Swagger. With the project running, you can acc
 
 ## Postman Collection
 
+There is a Postman collection available here, though it is for local testing only. URL variable can be found in the collection scope set to `http://localhost:5255`, the .NET default url when running with `dotnet run`
+
 [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/12774422-fa74b2ab-72af-4313-bcfb-dadbd3c5a617?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D12774422-fa74b2ab-72af-4313-bcfb-dadbd3c5a617%26entityType%3Dcollection%26workspaceId%3D7d19834a-2f61-4ab3-b03b-dfc0aeccd911)
 
 ## Testing
