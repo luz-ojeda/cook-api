@@ -82,9 +82,10 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RecipeDTO>> GetRecipeByName(string name)
     {
+        var cleanName = name.Replace("-", " ").ToLower();
         var recipe = await _context.Recipes
                         .AsNoTracking()
-                        .Where(r => r.Name.ToLower() == name.ToLower())
+                        .Where(r => r.Name.ToLower() == cleanName)
                         .FirstOrDefaultAsync();
 
         if (recipe == null)
