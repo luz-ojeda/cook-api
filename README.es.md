@@ -100,9 +100,9 @@ Esta API está autodocumentada mediante Swagger. Con el proyecto corriendo, pued
 
 ## Colección de Postman
 
-Puede encontrar la colección Postman para esta API aquí.
+Hay una colección Postman disponible, aunque es solo para pruebas en entorno local (no tiene la URL de la API deployada). La variable URL se puede encontrar en la colección establecida en `http://localhost:5255`, la URL predeterminada de .NET cuando se ejecuta con `dotnet run`.
 
-Utiliza `http://localhost:5255` de forma predeterminada, por lo que si elige ejecutar la API con Docker, actualice la url en las solicitudes.
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/12774422-fa74b2ab-72af-4313-bcfb-dadbd3c5a617?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D12774422-fa74b2ab-72af-4313-bcfb-dadbd3c5a617%26entityType%3Dcollection%26workspaceId%3D7d19834a-2f61-4ab3-b03b-dfc0aeccd911)
 
 ## Pruebas
 
