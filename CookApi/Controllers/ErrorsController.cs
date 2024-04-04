@@ -31,8 +31,9 @@ public class ErrorsController : ControllerBase
         logger.LogError(exceptionHandlerFeature?.Error.ToString());
 
         return Problem(
-            detail: exceptionHandlerFeature?.Error.StackTrace,
-            title: exceptionHandlerFeature?.Error.Message);
+            detail: exceptionHandlerFeature?.Error.InnerException.Message,
+            title: exceptionHandlerFeature?.Error.Message
+            );
 
     }
 }

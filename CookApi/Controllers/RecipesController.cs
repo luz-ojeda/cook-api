@@ -66,7 +66,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
 
         if (onlyVegetarian)
         {
-            query = query.Where(recipe => recipe.Vegetarian);
+            query = query.Where(recipe => recipe.Vegetarian ?? false);
         }
 
         var recipes = query
@@ -129,6 +129,37 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         return NoContent();
     }
 
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<RecipeDTO>> PostRecipe(RecipeDTO recipeDTO)
+    {
+        var recipe = new Recipe
+        {
+            Id = Guid.NewGuid(),
+            Name = recipeDTO.Name,
+            Summary = recipeDTO.Summary,
+            Ingredients = recipeDTO.Ingredients,
+            Instructions = recipeDTO.Instructions,
+            Pictures = recipeDTO.Pictures,
+            Videos = recipeDTO.Videos,
+            PreparationTime = recipeDTO.PreparationTime,
+            CookingTime = recipeDTO.CookingTime,
+            Servings = recipeDTO.Servings,
+            Difficulty = recipeDTO.Difficulty != null ? (RecipeDifficulty)Enum.Parse(typeof(RecipeDifficulty), recipeDTO.Difficulty) : null,
+            Vegetarian = recipeDTO.Vegetarian
+        };
+
+        _context.Recipes.Add(recipe);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(
+            nameof(GetRecipeById),
+            new { id = recipe.Id },
+            RecipeToDTO(recipe)
+        );
+    }
+
     private static RecipeDTO RecipeToDTO(Recipe recipe) =>
        new()
        {
@@ -143,6 +174,6 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
            CookingTime = recipe.CookingTime,
            Servings = recipe.Servings,
            Difficulty = recipe.Difficulty?.ToString(),
-           Vegetarian = recipe.Vegetarian
+           Vegetarian = recipe.Vegetarian ?? false
        };
 }
