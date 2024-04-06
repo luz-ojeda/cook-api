@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using CookApi.Models;
 
 namespace CookApi.DTOs;
 
@@ -6,9 +7,9 @@ public class RecipeDTO
 {
     public Guid Id { get; set; }
 
-    [Required, MinLength(1), MaxLength(150)]
-    [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚâêîôÂÊÎÔãõÃÕàèìòùÀÈÌÒÙäëïöüÄËÏÖÜÑñçÇ,''\-!&¡\s]{1,40}$", 
-        ErrorMessage = "Used invalid characters in the recipe name.")]
+    [Required, MaxLength(150)]
+    [RegularExpression(@"^[A-Za-zÀ-ÿ0-9\s\-.,'&:¡!]+$", 
+         ErrorMessage = "Used invalid characters in recipe name.")]
     [Display(Name = "Recipe name")]
     public required string Name { get; set; }
 
@@ -36,6 +37,7 @@ public class RecipeDTO
     [Range(1, 50)]
     public int? Servings { get; set; }
 
+    [EnumDataType(typeof(RecipeDifficulty), ErrorMessage = "Difficulty invalid. Only Easy, Medium and Hard are allowed.")]
     public string? Difficulty { get; set; }
 
     public bool Vegetarian { get; set; }

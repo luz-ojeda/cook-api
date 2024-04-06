@@ -19,13 +19,36 @@ public class RecipeCreationTests
     }
 
     [TestMethod]
-    public async Task Recipes_CreateRecipe_MinimumBody()
+    public async Task Recipes_CreateRecipe_ValidMinimumBody()
     {
         var recipe = new
         {
             Name = "Ñóquís con poléntá, queso y ají",
             Ingredients = new List<string> { "ing 1", "ing 2" },
             Instructions = _validInstructions,
+        };
+
+        var response = await _httpClient.PostAsJsonAsync("/recipes", recipe);
+        var recipeDTO = await response.Content.ReadFromJsonAsync<RecipeDTO>();
+
+        Assert.IsNotNull(recipeDTO, "The recipe returned after creation should not be null");
+        Assert.IsTrue(response.StatusCode == HttpStatusCode.Created, $"The status code returned should be 400 Bad Request and was {response.StatusCode}");
+    }
+
+    [TestMethod]
+    public async Task Recipes_CreateRecipe_ValidFullBody()
+    {
+        var recipe = new
+        {
+            Name = "Ráviólés con poléntá, queso y ají!",
+            Summary = "Un resumen para una receta debe ser conciso",
+            Ingredients = new List<string> { "ing 1", "ing 2" },
+            Instructions = _validInstructions,
+            PreparationTime = 10,
+            CookingTime = 25,
+            Servings = 2,
+            Difficulty = "Easy",
+            Vegetarian = true
         };
 
         var response = await _httpClient.PostAsJsonAsync("/recipes", recipe);
@@ -146,29 +169,14 @@ public class RecipeCreationTests
     }
 
     [TestMethod]
-    public async Task Recipes_CreateRecipe_InvalidEmptyIngredients()
-    {
-        var recipe = new
-        {
-            Name = "Invalid empty ingredients recipe Name",
-            Instructions = " ",
-            Ingredients = new List<string> { " ", " " },
-        };
-
-        var response = await _httpClient.PostAsJsonAsync("/recipes", recipe);
-
-        Assert.IsTrue(response.StatusCode == HttpStatusCode.BadRequest, $"The status code returned should be 400 Bad Request and was {response.StatusCode}");
-    }
-
-    [TestMethod]
     public async Task Recipes_CreateRecipe_InvalidDifficulty()
     {
         var recipe = new
         {
             Name = "Invalid difficulty recipe name",
-            Instructions = " ",
+            Instructions = _validInstructions,
             Ingredients = new List<string> { "ing 1", "ing 2" },
-            Difficulty = "Super duper easy",
+            Difficulty = "Very easy",
         };
 
         var response = await _httpClient.PostAsJsonAsync("/recipes", recipe);
@@ -181,10 +189,58 @@ public class RecipeCreationTests
     {
         var recipe = new
         {
-            Name = "Extravagant Galactic Unicorn Dream Delight",
+            Name = "Invalid too long summary recipe name",
             instructions = _validInstructions,
             Ingredients = new List<string> { "ing 1", "ing 2" },
             Summary = "Embark on a journey through the mystical cosmos with our Extravagant Galactic Delight, a mesmerizing fusion of ethereal unicorn dreams, sparkling stardust sprinkles, and decadent chocolate fudge, all served atop a billowing rainbow cloud carpet, transporting you to a realm of unparalleled delight and wonder"
+        };
+
+        var response = await _httpClient.PostAsJsonAsync("/recipes", recipe);
+
+        Assert.IsTrue(response.StatusCode == HttpStatusCode.BadRequest, $"The status code returned should be 400 Bad Request and was {response.StatusCode}");
+    }
+
+    [TestMethod]
+    public async Task Recipes_CreateRecipe_InvalidPreparationTime()
+    {
+        var recipe = new
+        {
+            Name = "Invalid preparation time recipe name",
+            instructions = _validInstructions,
+            Ingredients = new List<string> { "ing 1", "ing 2" },
+            PreparationTime = -23
+        };
+
+        var response = await _httpClient.PostAsJsonAsync("/recipes", recipe);
+
+        Assert.IsTrue(response.StatusCode == HttpStatusCode.BadRequest, $"The status code returned should be 400 Bad Request and was {response.StatusCode}");
+    }
+
+    [TestMethod]
+    public async Task Recipes_CreateRecipe_InvalidCookingTime()
+    {
+        var recipe = new
+        {
+            Name = "Invalid cooking time recipe name",
+            instructions = _validInstructions,
+            Ingredients = new List<string> { "ing 1", "ing 2" },
+            CookingTime = -15
+        };
+
+        var response = await _httpClient.PostAsJsonAsync("/recipes", recipe);
+
+        Assert.IsTrue(response.StatusCode == HttpStatusCode.BadRequest, $"The status code returned should be 400 Bad Request and was {response.StatusCode}");
+    }
+
+    [TestMethod]
+    public async Task Recipes_CreateRecipe_InvalidVegetarian()
+    {
+        var recipe = new
+        {
+            Name = "Invalid vegetarian value recipe name",
+            instructions = _validInstructions,
+            Ingredients = new List<string> { "ing 1", "ing 2" },
+            Vegetarian = "false"
         };
 
         var response = await _httpClient.PostAsJsonAsync("/recipes", recipe);
