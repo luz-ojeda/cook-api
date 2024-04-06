@@ -134,6 +134,11 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<RecipeDTO>> PostRecipe(RecipeDTO recipeDTO)
     {
+        if (recipeDTO.Difficulty != null && !Enum.IsDefined(typeof(RecipeDifficulty), recipeDTO.Difficulty))
+        {
+            return BadRequest();
+        }
+
         var recipe = new Recipe
         {
             Id = Guid.NewGuid(),
