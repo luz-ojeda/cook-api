@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using ApiKeyAuthentication.Middlewares;
+using CookApi.Services;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,11 +21,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers()
     .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
 
-// Add services to the container.
+// Services
 var conn = builder.Configuration.GetConnectionString(builder.Environment.IsEnvironment("Docker") ? "Docker" : "DefaultConnection");
 
 builder.Services.AddDbContext<CookApi.Data.CookApiDbContext>(options =>
     options.UseNpgsql(conn));
+builder.Services.AddScoped<RecipesService>();
 
 builder.Services.AddControllers();
 

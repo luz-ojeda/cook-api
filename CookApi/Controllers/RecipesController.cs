@@ -1,6 +1,7 @@
 using CookApi.Data;
 using CookApi.DTOs;
 using CookApi.Models;
+using CookApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,10 +9,14 @@ namespace cook_api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class RecipesController(CookApiDbContext context, ILogger<RecipesController> logger) : ControllerBase
+public class RecipesController(
+    CookApiDbContext context,
+    ILogger<RecipesController> logger,
+    RecipesService recipesService) : ControllerBase
 {
     private readonly CookApiDbContext _context = context;
     private readonly ILogger<RecipesController> _logger = logger;
+    private readonly RecipesService _recipesService = recipesService;
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -134,35 +139,9 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<RecipeDTO>> PostRecipe(RecipeDTO recipeDTO)
     {
-        if (recipeDTO.Difficulty != null && !Enum.IsDefined(typeof(RecipeDifficulty), recipeDTO.Difficulty))
-        {
-            return BadRequest();
-        }
+        var recipe = await _recipesService.CreateRecipe(recipeDTO);
 
-        var recipe = new Recipe
-        {
-            Id = Guid.NewGuid(),
-            Name = recipeDTO.Name,
-            Summary = recipeDTO.Summary,
-            Ingredients = recipeDTO.Ingredients,
-            Instructions = recipeDTO.Instructions,
-            Pictures = recipeDTO.Pictures,
-            Videos = recipeDTO.Videos,
-            PreparationTime = recipeDTO.PreparationTime,
-            CookingTime = recipeDTO.CookingTime,
-            Servings = recipeDTO.Servings,
-            Difficulty = recipeDTO.Difficulty != null ? (RecipeDifficulty)Enum.Parse(typeof(RecipeDifficulty), recipeDTO.Difficulty) : null,
-            Vegetarian = recipeDTO.Vegetarian
-        };
-
-        _context.Recipes.Add(recipe);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction(
-            nameof(GetRecipeById),
-            new { id = recipe.Id },
-            RecipeToDTO(recipe)
-        );
+        return Created(nameof(GetRecipeById), RecipeToDTO(recipe));
     }
 
     private static RecipeDTO RecipeToDTO(Recipe recipe) =>

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace CookApi.Models;
 
 public enum RecipeDifficulty
