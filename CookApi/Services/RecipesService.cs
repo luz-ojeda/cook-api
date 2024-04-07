@@ -1,7 +1,9 @@
+using System.Data;
 using CookApi.Data;
 using CookApi.DTOs;
 using CookApi.Models;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace CookApi.Services;
 
@@ -11,11 +13,6 @@ public class RecipesService(CookApiDbContext context)
 
     public async Task<Recipe> CreateRecipe(RecipeDTO recipeDTO)
     {
-        // if (recipeDTO.Difficulty != null && !Enum.IsDefined(typeof(RecipeDifficulty), recipeDTO.Difficulty))
-        // {
-        //     return BadRequest();
-        // }
-
         var recipe = new Recipe
         {
             Id = Guid.NewGuid(),
@@ -32,8 +29,15 @@ public class RecipesService(CookApiDbContext context)
             Vegetarian = recipeDTO.Vegetarian
         };
 
-        _context.Recipes.Add(recipe);
-        await _context.SaveChangesAsync();
+        try
+        {
+            _context.Recipes.Add(recipe);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException dbUpdateException) when (dbUpdateException.InnerException is NpgsqlException { SqlState: "23505" })
+        {
+            throw new DuplicateNameException($"The recipe with name {recipeDTO.Name} already exists.");
+        }
 
         return recipe;
     }

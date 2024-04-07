@@ -41,7 +41,7 @@ builder.Services.AddHttpLogging(o =>
                       HttpLoggingFields.RequestQuery |
                       HttpLoggingFields.RequestBody |
                       HttpLoggingFields.Duration;
-    });
+    });    
 
 var app = builder.Build();
 

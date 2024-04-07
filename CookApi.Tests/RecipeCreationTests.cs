@@ -109,6 +109,21 @@ public class RecipeCreationTests
     }
 
     [TestMethod]
+    public async Task Recipes_CreateRecipe_InvalidNameAlreadyInUse()
+    {
+        var recipe = new
+        {
+            Name = "Vegetable Lasagna",
+            instructions = _validInstructions,
+            Ingredients = new List<string> { "ing 1", "ing 2" },
+        };
+
+        var response = await _httpClient.PostAsJsonAsync("/recipes", recipe);
+
+        Assert.IsTrue(response.StatusCode == HttpStatusCode.Conflict, $"The status code returned should be 400 Bad Request and was {response.StatusCode}");
+    }
+
+    [TestMethod]
     public async Task Recipes_CreateRecipe_InvalidSymbolsName()
     {
         var recipe = new
