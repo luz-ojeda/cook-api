@@ -90,7 +90,7 @@ public class RecipesController(
         var cleanName = name.Replace("-", " ").ToLower();
         var recipe = await _context.Recipes
                         .AsNoTracking()
-                        .Where(r => r.Name.ToLower() == cleanName)
+                        .Where(r => r.Name.ToLower().Replace("-", " ") == cleanName)
                         .FirstOrDefaultAsync();
 
         if (recipe == null)
@@ -137,6 +137,7 @@ public class RecipesController(
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<RecipeDTO>> PostRecipe(RecipeDTO recipeDTO)
     {
         var recipe = await _recipesService.CreateRecipe(recipeDTO);

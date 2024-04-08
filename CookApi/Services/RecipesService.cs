@@ -18,7 +18,7 @@ public class RecipesService(CookApiDbContext context)
             Id = Guid.NewGuid(),
             Name = recipeDTO.Name,
             Summary = recipeDTO.Summary,
-            Ingredients = recipeDTO.Ingredients,
+            Ingredients = recipeDTO.Ingredients.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList(),
             Instructions = recipeDTO.Instructions,
             Pictures = recipeDTO.Pictures,
             Videos = recipeDTO.Videos,

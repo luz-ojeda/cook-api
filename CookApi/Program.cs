@@ -34,15 +34,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddHttpLogging(o =>
-    {
-        o.LoggingFields = HttpLoggingFields.RequestMethod |
-                      HttpLoggingFields.RequestPath |
-                      HttpLoggingFields.RequestQuery |
-                      HttpLoggingFields.RequestBody |
-                      HttpLoggingFields.Duration;
-    });    
-
+if (isDevelopment)
+{
+    builder.Services.AddHttpLogging(o =>
+        {
+            o.LoggingFields = HttpLoggingFields.RequestMethod |
+                          HttpLoggingFields.RequestPath |
+                          HttpLoggingFields.RequestQuery |
+                          HttpLoggingFields.RequestBody |
+                          HttpLoggingFields.Duration |
+                          HttpLoggingFields.ResponseStatusCode |
+                          HttpLoggingFields.ResponseBody;
+        });
+}
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
