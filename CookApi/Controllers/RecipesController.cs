@@ -1,6 +1,7 @@
 using CookApi.Data;
 using CookApi.DTOs;
 using CookApi.Models;
+using CookApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,10 +9,14 @@ namespace cook_api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class RecipesController(CookApiDbContext context, ILogger<RecipesController> logger) : ControllerBase
+public class RecipesController(
+    CookApiDbContext context,
+    ILogger<RecipesController> logger,
+    RecipesService recipesService) : ControllerBase
 {
     private readonly CookApiDbContext _context = context;
     private readonly ILogger<RecipesController> _logger = logger;
+    private readonly RecipesService _recipesService = recipesService;
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -66,7 +71,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
 
         if (onlyVegetarian)
         {
-            query = query.Where(recipe => recipe.Vegetarian);
+            query = query.Where(recipe => recipe.Vegetarian ?? false);
         }
 
         var recipes = query
@@ -85,7 +90,7 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         var cleanName = name.Replace("-", " ").ToLower();
         var recipe = await _context.Recipes
                         .AsNoTracking()
-                        .Where(r => r.Name.ToLower() == cleanName)
+                        .Where(r => r.Name.ToLower().Replace("-", " ") == cleanName)
                         .FirstOrDefaultAsync();
 
         if (recipe == null)
@@ -129,6 +134,17 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
         return NoContent();
     }
 
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<RecipeDTO>> PostRecipe(RecipeDTO recipeDTO)
+    {
+        var recipe = await _recipesService.CreateRecipe(recipeDTO);
+
+        return Created(nameof(GetRecipeById), RecipeToDTO(recipe));
+    }
+
     private static RecipeDTO RecipeToDTO(Recipe recipe) =>
        new()
        {
@@ -143,6 +159,6 @@ public class RecipesController(CookApiDbContext context, ILogger<RecipesControll
            CookingTime = recipe.CookingTime,
            Servings = recipe.Servings,
            Difficulty = recipe.Difficulty?.ToString(),
-           Vegetarian = recipe.Vegetarian
+           Vegetarian = recipe.Vegetarian ?? false
        };
 }
