@@ -4,6 +4,8 @@
 
 .NET-based application that serves as a simple and convenient platform for managing and retrieving cooking recipes.
 
+A live version of a web app using the API can be found [here](https://cook-web-weathered-thunder-7639.fly.dev/) and the repository for the front end [here](https://github.com/luz-ojeda/cook-web).
+
 ## Features
 
 - Recipe management: Read and delete operations for recipes (update, delete and creation work in progress).
@@ -99,9 +101,9 @@ This API is self-documented using Swagger. With the project running, you can acc
 
 ## Postman Collection
 
-You can find the Postman collection for this API here
+There is a Postman collection available, though it is for local testing only. URL variable can be found in the collection scope set to `http://localhost:5255`, the .NET default url when running with `dotnet run`
 
-It uses `http://localhost:5255` by default so if you choose to run the API with Docker, update accordingly.
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/12774422-fa74b2ab-72af-4313-bcfb-dadbd3c5a617?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D12774422-fa74b2ab-72af-4313-bcfb-dadbd3c5a617%26entityType%3Dcollection%26workspaceId%3D7d19834a-2f61-4ab3-b03b-dfc0aeccd911)
 
 ## Testing
 
