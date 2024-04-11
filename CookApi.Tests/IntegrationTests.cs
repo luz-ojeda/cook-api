@@ -41,8 +41,8 @@ public class IntegrationTests
             paginatedList.Data.Count == limit,
             $"Expected {limit} recipes, but got {paginatedList.Data.Count}");
         Assert.IsTrue(
-            paginatedList.Pagination.PageSize == limit,
-            $"Expected {limit} page size value in Pagination but got {paginatedList.Pagination.PageSize}");
+            paginatedList.Pagination?.PageSize == limit,
+            $"Expected {limit} page size value in Pagination but got {paginatedList.Pagination?.PageSize}");
     }
 
     [TestMethod]
@@ -53,7 +53,7 @@ public class IntegrationTests
 
         Assert.IsNotNull(firstPaginatedList, "The list of recipes should not be null");
 
-        var page = firstPaginatedList.Pagination.TotalPages + 1;
+        var page = firstPaginatedList.Pagination?.TotalPages + 1;
         var pageQueryParameter = $"page={page}";
 
         var secondResponse = await _httpClient.GetAsync("/recipes?" + pageQueryParameter);
