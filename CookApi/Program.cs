@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 using ApiKeyAuthentication.Middlewares;
-using CookApi.Services;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
+using CookApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

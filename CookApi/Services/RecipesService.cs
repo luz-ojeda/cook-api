@@ -1,9 +1,9 @@
 using System.Data;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using CookApi.Data;
 using CookApi.DTOs;
 using CookApi.Models;
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace CookApi.Services;
 
