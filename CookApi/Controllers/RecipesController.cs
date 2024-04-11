@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using CookApi.Data;
 using CookApi.DTOs;
 using CookApi.Models;
 using CookApi.Services;
-using CookApi.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace cook_api.Controllers;
 
