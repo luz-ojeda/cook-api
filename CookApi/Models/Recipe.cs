@@ -2,13 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CookApi.Models;
 
-public enum RecipeDifficulty
-{
-    Easy,
-    Medium,
-    Hard
-}
-
 public class Recipe
 {
     public Guid Id { get; set; }

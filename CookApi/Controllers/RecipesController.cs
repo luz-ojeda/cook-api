@@ -38,7 +38,7 @@ public class RecipesController(
             query = query.Where(recipe => recipe.Name.ToLower().Contains(name.ToLower()));
         }
 
-        if (ingredients != null && ingredients?.Length != 0)
+        if (ingredients != null && ingredients.Length != 0)
         {
             var lowerCaseIngredients = ingredients.Select(i => i.ToLower()).ToArray();
 
@@ -61,7 +61,7 @@ public class RecipesController(
             query = query.Where(recipe => difficultyFilter.Contains(recipe.Difficulty));
         }
 
-        if (ids != null && ids?.Length != 0)
+        if (ids != null && ids.Length != 0)
         {
             foreach (string id in ids)
             {
