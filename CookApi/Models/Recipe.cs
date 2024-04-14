@@ -16,8 +16,8 @@ public class Recipe
     public string? Summary { get; set; }
     public required List<string> Ingredients { get; set; }
     public required string Instructions { get; set; }
-    public List<string> Pictures { get; set; } = [];
-    public List<string> Videos { get; set; } = [];
+    public List<string>? Pictures { get; set; } = [];
+    public List<string>? Videos { get; set; } = [];
     public int? PreparationTime { get; set; }
     public int? CookingTime { get; set; }
     public int? Servings { get; set; }
