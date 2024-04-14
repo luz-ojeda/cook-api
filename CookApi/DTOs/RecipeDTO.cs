@@ -22,9 +22,9 @@ public class RecipeDTO
     [Required, MinLength(20)]
     public required string Instructions { get; set; }
 
-    public List<string> Pictures { get; set; } = [];
+    public List<string>? Pictures { get; set; } = [];
 
-    public List<string> Videos { get; set; } = [];
+    public List<string>? Videos { get; set; } = [];
 
     [Range(1, 300)]
     [Display(Name = "Preparation time")]
