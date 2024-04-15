@@ -3,7 +3,7 @@ using ApiKeyAuthentication.Middlewares;
 using CookApi.Services;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
-using CookApi.Services;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +33,20 @@ builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Cook API",
+        Description = "An ASP.NET Core Web API for managing cooking recipes.",
+        Contact = new OpenApiContact
+        {
+            Name = "Luz Ojeda",
+            Email = "luzojeda@proton.me"
+        },
+    });
+});
 
 if (isDevelopment)
 {

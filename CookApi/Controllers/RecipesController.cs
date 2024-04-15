@@ -21,6 +21,7 @@ public class RecipesController(
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Produces("application/json")]
     public async Task<ActionResult<PaginatedList<RecipeDTO>>> GetRecipes(
         [FromQuery] int limit = 10,
         [FromQuery] int page = 1,
@@ -85,6 +86,7 @@ public class RecipesController(
     [HttpGet("name/{name}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Produces("application/json")]
     public async Task<ActionResult<RecipeDTO>> GetRecipeByName(string name)
     {
         var cleanName = name.Replace("-", " ").ToLower();
@@ -104,6 +106,7 @@ public class RecipesController(
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Produces("application/json")]
     public async Task<ActionResult<RecipeDTO>> GetRecipeById(Guid id)
     {
         var recipe = await _context.Recipes.FindAsync(id);
@@ -138,6 +141,7 @@ public class RecipesController(
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [Produces("application/json")]
     public async Task<ActionResult<RecipeDTO>> PostRecipe(RecipeDTO recipeDTO)
     {
         var recipe = await _recipesService.CreateRecipe(recipeDTO);
