@@ -6,9 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace cook_api.Controllers;
 
 [ApiController]
+[ApiExplorerSettings(IgnoreApi = true)]
 public class ErrorsController : ControllerBase
 {
-    ILogger<ErrorsController> logger;
+    private readonly ILogger<ErrorsController> logger;
     public ErrorsController(ILogger<ErrorsController> logger)
     {
         this.logger = logger;
