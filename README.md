@@ -59,7 +59,6 @@ Inside the `appsettings.Development.json` file, locate the `ConnectionStrings` p
 
    ```bash
    dotnet restore
-   dotnet ef migrations add InitialMigrate
    dotnet ef database update
    ```
 
