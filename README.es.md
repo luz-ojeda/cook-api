@@ -2,7 +2,7 @@
 
 [![en](https://img.shields.io/badge/lang-en-blue)](https://github.com/luz-ojeda/cook-api/blob/main/README.md)
 
-API en .NET que sirve como una plataforma sencilla y cómoda para gestionar recetas de cocina.
+API en .NET que sirve como una plataforma sencilla para gestionar recetas de cocina.
 
 Puede encontrar una versión deployada de la aplicación web que utiliza la API [aquí](https://cook-web-weathered-thunder-7639.fly.dev/) y el repositorio para el front-end [aquí](https:/ /github.com/luz-ojeda/cook-web).
 
@@ -58,7 +58,6 @@ Dentro del archivo `appsettings.Development.json`, ubique la propiedad `Connecti
 
     ```bash
     dotnet restore
-    dotnet ef migrations add InitialMigrate
     dotnet ef database update
     ```
 
