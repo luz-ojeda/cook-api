@@ -1,3 +1,4 @@
+using AutoMapper;
 using CookApi.Data;
 using CookApi.DTOs;
 using CookApi.Models;
@@ -12,11 +13,13 @@ namespace cook_api.Controllers;
 public class RecipesController(
     CookApiDbContext context,
     ILogger<RecipesController> logger,
-    RecipesService recipesService) : ControllerBase
+    RecipesService recipesService,
+    IMapper mapper) : ControllerBase
 {
     private readonly CookApiDbContext _context = context;
     private readonly ILogger<RecipesController> _logger = logger;
     private readonly RecipesService _recipesService = recipesService;
+    private readonly IMapper _mapper = mapper;
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -77,7 +80,7 @@ public class RecipesController(
 
         var recipes = query
             .OrderBy(r => r.Id)
-            .Select(recipe => RecipeToDTO(recipe))
+            .Select(recipe => _mapper.Map<RecipeDTO>(recipe))
             .AsNoTracking();
 
         return await PaginatedList<RecipeDTO>.CreateAsync(recipes, page, limit);
@@ -100,7 +103,7 @@ public class RecipesController(
             return NotFound();
         }
 
-        return RecipeToDTO(recipe);
+        return _mapper.Map<RecipeDTO>(recipe);
     }
 
     [HttpGet("{id}")]
@@ -116,7 +119,7 @@ public class RecipesController(
             return NotFound();
         }
 
-        return RecipeToDTO(recipe);
+        return _mapper.Map<RecipeDTO>(recipe);
     }
 
     [HttpDelete("{id}")]
@@ -146,23 +149,6 @@ public class RecipesController(
     {
         var recipe = await _recipesService.CreateRecipe(recipeDTO);
 
-        return Created(nameof(GetRecipeById), RecipeToDTO(recipe));
+        return Created(nameof(GetRecipeById), _mapper.Map<RecipeDTO>(recipe));
     }
-
-    private static RecipeDTO RecipeToDTO(Recipe recipe) =>
-       new()
-       {
-           Id = recipe.Id,
-           Name = recipe.Name,
-           Summary = recipe.Summary,
-           Ingredients = recipe.Ingredients,
-           Instructions = recipe.Instructions,
-           Pictures = recipe.Pictures,
-           Videos = recipe.Videos,
-           PreparationTime = recipe.PreparationTime,
-           CookingTime = recipe.CookingTime,
-           Servings = recipe.Servings,
-           Difficulty = recipe.Difficulty?.ToString(),
-           Vegetarian = recipe.Vegetarian ?? false
-       };
 }
