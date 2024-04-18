@@ -4,30 +4,18 @@ using Npgsql;
 using CookApi.Data;
 using CookApi.DTOs;
 using CookApi.Models;
+using AutoMapper;
 
 namespace CookApi.Services;
 
-public class RecipesService(CookApiDbContext context)
+public class RecipesService(CookApiDbContext context, IMapper mapper)
 {
     private readonly CookApiDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<Recipe> CreateRecipe(RecipeDTO recipeDTO)
     {
-        var recipe = new Recipe
-        {
-            Id = Guid.NewGuid(),
-            Name = recipeDTO.Name,
-            Summary = recipeDTO.Summary,
-            Ingredients = recipeDTO.Ingredients.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList(),
-            Instructions = recipeDTO.Instructions,
-            Pictures = recipeDTO.Pictures,
-            Videos = recipeDTO.Videos,
-            PreparationTime = recipeDTO.PreparationTime,
-            CookingTime = recipeDTO.CookingTime,
-            Servings = recipeDTO.Servings,
-            Difficulty = recipeDTO.Difficulty != null ? (RecipeDifficulty)Enum.Parse(typeof(RecipeDifficulty), recipeDTO.Difficulty) : null,
-            Vegetarian = recipeDTO.Vegetarian
-        };
+        var recipe = _mapper.Map<Recipe>(recipeDTO);
 
         try
         {

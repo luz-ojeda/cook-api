@@ -67,7 +67,7 @@ if (isDevelopment)
 // Automapper
 var configuration = new MapperConfiguration(cfg =>
 {
-    cfg.CreateMap<Recipe, RecipeDTO>();
+    cfg.AddProfile<AutoMapperProfile>();
 });
 // only during development, validate your mappings; remove it before release
 #if DEBUG
