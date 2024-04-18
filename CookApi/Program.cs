@@ -1,5 +1,8 @@
 using System.Text.Json.Serialization;
 using ApiKeyAuthentication.Middlewares;
+using AutoMapper;
+using CookApi.DTOs;
+using CookApi.Models;
 using CookApi.Services;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +34,6 @@ builder.Services.AddScoped<RecipesService>();
 
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -61,6 +63,20 @@ if (isDevelopment)
                           HttpLoggingFields.ResponseBody;
         });
 }
+
+// Automapper
+var configuration = new MapperConfiguration(cfg =>
+{
+    cfg.CreateMap<Recipe, RecipeDTO>();
+});
+// only during development, validate your mappings; remove it before release
+#if DEBUG
+configuration.AssertConfigurationIsValid();
+#endif
+
+var mapper = configuration.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
