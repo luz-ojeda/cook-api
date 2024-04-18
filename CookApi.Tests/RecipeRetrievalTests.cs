@@ -3,15 +3,16 @@ using CookApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Http.Json;
+using System.Net;
 
 namespace CookApi.Tests;
 
 [TestClass]
-public class IntegrationTests
+public class RecipeRetrievalTests
 {
     private readonly HttpClient _httpClient;
 
-    public IntegrationTests()
+    public RecipeRetrievalTests()
     {
         var webAppFactory = new CustomWebApplicationFactory<Program>();
         _httpClient = webAppFactory.CreateDefaultClient();
@@ -121,7 +122,7 @@ public class IntegrationTests
 
         var response = await _httpClient.GetAsync("/recipes?" + difficultyQueryParameter);
 
-        Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.BadRequest);
+        Assert.IsTrue(response.StatusCode == HttpStatusCode.BadRequest);
     }
 
     [TestMethod]
@@ -225,7 +226,7 @@ public class IntegrationTests
         string name = new("pastafrola");
         var response = await _httpClient.GetAsync("/recipes/name/" + name);
 
-        Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.NotFound);
+        Assert.IsTrue(response.StatusCode == HttpStatusCode.NotFound);
     }
 
     [TestMethod]
@@ -245,6 +246,6 @@ public class IntegrationTests
         Guid id = new("f6f3e96b-8583-4cda-8fc6-1f234fb5bc67");
         var response = await _httpClient.GetAsync("/recipes/" + id);
 
-        Assert.IsTrue(response.StatusCode == System.Net.HttpStatusCode.NotFound);
+        Assert.IsTrue(response.StatusCode == HttpStatusCode.NotFound);
     }
 }
