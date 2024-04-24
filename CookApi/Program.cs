@@ -69,10 +69,6 @@ var configuration = new MapperConfiguration(cfg =>
 {
     cfg.AddProfile<AutoMapperProfile>();
 });
-// only during development, validate your mappings; remove it before release
-#if DEBUG
-configuration.AssertConfigurationIsValid();
-#endif
 
 var mapper = configuration.CreateMapper();
 builder.Services.AddSingleton(mapper);
