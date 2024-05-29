@@ -1,5 +1,5 @@
 using CookApi.Data;
-using CookApi.Models;
+using CookApi.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,24 +18,18 @@ public class IngredientsController(
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Produces("application/json")]
-    public async Task<ActionResult<PaginatedList<Ingredient>>> GetIngredients(
-    [FromQuery] int limit = 10,
-    [FromQuery] int page = 1,
-    [FromQuery] string? name = null
-)
+    public async Task<ActionResult<List<GroupedIngredientsDTO>>> GetIngredients()
     {
-        IQueryable<Ingredient> query = _context.Ingredients.AsQueryable();
-
-        if (!string.IsNullOrEmpty(name))
-        {
-            query = query.Where(ingredient => ingredient.Name.ToLower().Contains(name.ToLower()));
-        }
-
-        var ingredients = query
-            .OrderBy(r => r.Id)
-            .AsNoTracking();
-
-        return await PaginatedList<Ingredient>.CreateAsync(ingredients, page, limit);
+        return await _context.Ingredients
+            .OrderBy(i => i.Id)
+            .GroupBy(i => i.Name.Substring(0, 1).ToUpper(),
+                    (letter, ingredients) => new GroupedIngredientsDTO
+                    {
+                        Letter = letter,
+                        Ingredients = ingredients.OrderBy(i => i.Name).ToList()
+                    })
+            .OrderBy(i => i.Letter)
+            .AsNoTracking()
+            .ToListAsync();
     }
-
 }
