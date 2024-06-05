@@ -73,7 +73,6 @@ namespace CookApi.Migrations
                         .HasColumnType("character varying(150)");
 
                     b.Property<List<string>>("Pictures")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("varchar(200)[]")
                         .HasDefaultValue(new List<string>());
@@ -88,13 +87,15 @@ namespace CookApi.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
-                    b.Property<bool>("Vegetarian")
+                    b.Property<bool>("UserCreated")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("Vegetarian")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<List<string>>("Videos")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("varchar(200)[]")
                         .HasDefaultValue(new List<string>());
