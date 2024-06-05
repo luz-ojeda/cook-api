@@ -41,4 +41,5 @@ public class RecipeDTO
     public string? Difficulty { get; set; }
 
     public bool Vegetarian { get; set; }
+    public bool UserCreated { get; set; }
 }
