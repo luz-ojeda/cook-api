@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using ApiKeyAuthentication.Middlewares;
 using AutoMapper;
-using CookApi.DTOs;
-using CookApi.Models;
 using CookApi.Services;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +29,7 @@ var conn = builder.Configuration.GetConnectionString(builder.Environment.IsEnvir
 builder.Services.AddDbContext<CookApi.Data.CookApiDbContext>(options =>
     options.UseNpgsql(conn));
 builder.Services.AddScoped<RecipesService>();
+builder.Services.AddScoped<AzureService>();
 
 builder.Services.AddControllers();
 
@@ -59,8 +58,7 @@ if (isDevelopment)
                           HttpLoggingFields.RequestQuery |
                           HttpLoggingFields.RequestBody |
                           HttpLoggingFields.Duration |
-                          HttpLoggingFields.ResponseStatusCode |
-                          HttpLoggingFields.ResponseBody;
+                          HttpLoggingFields.ResponseStatusCode;
         });
 }
 
