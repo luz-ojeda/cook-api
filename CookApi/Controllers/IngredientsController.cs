@@ -3,7 +3,7 @@ using CookApi.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace cook_api.Controllers;
+namespace CookApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]

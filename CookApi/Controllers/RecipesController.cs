@@ -7,7 +7,7 @@ using CookApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace cook_api.Controllers;
+namespace CookApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -15,11 +15,13 @@ public class RecipesController(
     CookApiDbContext context,
     ILogger<RecipesController> logger,
     RecipesService recipesService,
+    AzureService azureService,
     IMapper mapper) : ControllerBase
 {
     private readonly CookApiDbContext _context = context;
     private readonly ILogger<RecipesController> _logger = logger;
     private readonly RecipesService _recipesService = recipesService;
+    private readonly AzureService _azureService = azureService;
     private readonly IMapper _mapper = mapper;
 
     [HttpGet]
@@ -93,7 +95,7 @@ public class RecipesController(
     [Produces("application/json")]
     public async Task<ActionResult<RecipeDTO>> GetRecipeByName(string name)
     {
-        var cleanName = name.Replace("-", " ").ToLower();
+        var cleanName = DeslugifyName(name);
         var recipe = await _context.Recipes
                         .AsNoTracking()
                         .Where(r => r.Name.ToLower().Replace("-", " ") == cleanName)
@@ -103,6 +105,7 @@ public class RecipesController(
         {
             return NotFound();
         }
+        await _azureService.DeleteBlobsInFolderAsync(SlugifyName(recipe.Name));
 
         return _mapper.Map<RecipeDTO>(recipe);
     }
@@ -137,6 +140,15 @@ public class RecipesController(
 
         _context.Recipes.Remove(recipe);
         await _context.SaveChangesAsync();
+
+        try
+        {
+            await _azureService.DeleteBlobsInFolderAsync(SlugifyName(recipe.Name));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Found an exception trying to delete the recipe's images: {e}");
+        }
 
         return NoContent();
     }
@@ -178,5 +190,15 @@ public class RecipesController(
         await _context.SaveChangesAsync();
 
         return Created(nameof(GetRecipeById), _mapper.Map<RecipeDTO>(recipe));
+    }
+
+    private static string SlugifyName(string name)
+    {
+        return name.Replace(" ", "-").ToLower();
+    }
+
+    private static string DeslugifyName(string name)
+    {
+        return name.Replace("-", " ").ToLower();
     }
 }

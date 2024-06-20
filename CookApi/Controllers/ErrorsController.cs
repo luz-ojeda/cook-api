@@ -3,7 +3,7 @@ using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace cook_api.Controllers;
+namespace CookApi.Controllers;
 
 [ApiController]
 [ApiExplorerSettings(IgnoreApi = true)]
