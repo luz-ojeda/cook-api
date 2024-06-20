@@ -15,7 +15,6 @@ public class AzureService
 
     public async Task DeleteBlobsInFolderAsync(string folderPath)
     {
-
         string connectionString = _configuration["AzureStorageConnectionString"];
         BlobServiceClient client = new(connectionString);
         BlobContainerClient containerClient = client.GetBlobContainerClient(containerName);
