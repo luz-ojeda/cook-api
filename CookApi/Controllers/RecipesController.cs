@@ -105,7 +105,6 @@ public class RecipesController(
         {
             return NotFound();
         }
-        await _azureService.DeleteBlobsInFolderAsync(SlugifyName(recipe.Name));
 
         return _mapper.Map<RecipeDTO>(recipe);
     }
