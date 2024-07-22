@@ -18,7 +18,8 @@ public class AutoMapperProfile : Profile
 			.ForMember(dest => dest.CookingTime, opt => opt.Condition(src => src.CookingTime != null))
 			.ForMember(dest => dest.Servings, opt => opt.Condition(src => src.Servings != null))
 			.ForMember(dest => dest.Difficulty, opt => opt.Condition(src => src.Difficulty != null))
-			.ForMember(dest => dest.Vegetarian, opt => opt.MapFrom(src => src.Vegetarian));
+			.ForMember(dest => dest.Vegetarian, opt => opt.MapFrom(src => src.Vegetarian))
+            .ForMember(dest => dest.UserEmail, opt => opt.Condition(src => src.UserEmail != null));
 		CreateMap<RecipeDTO, Recipe>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
             .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => MapIngredients(src.Ingredients)))

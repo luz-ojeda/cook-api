@@ -39,4 +39,5 @@ public class UpdateRecipeDTO
     public string? Difficulty { get; set; }
 
     public bool Vegetarian { get; set; }
+    public bool UserEmail { get; set; }
 }

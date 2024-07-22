@@ -14,5 +14,5 @@ public class Recipe
     public int? Servings { get; set; }
     public RecipeDifficulty? Difficulty { get; set; }
     public bool? Vegetarian { get; set; }
-    public bool UserCreated { get; set; }
+    public string? UserEmail { get; set; }
 }
