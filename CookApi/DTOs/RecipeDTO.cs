@@ -41,5 +41,7 @@ public class RecipeDTO
     public string? Difficulty { get; set; }
 
     public bool Vegetarian { get; set; }
-    public bool UserCreated { get; set; }
+
+    [MaxLength(50)]
+    public string? UserEmail { get; set; }
 }

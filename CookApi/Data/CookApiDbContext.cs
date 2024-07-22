@@ -67,6 +67,10 @@ public class CookApiDbContext : DbContext
                 .Property(i => i.Substitutions)
                 .HasColumnType("varchar(50)[]");
 
+                modelBuilder.Entity<Recipe>()
+                .Property(r => r.UserEmail)
+                .HasMaxLength(50);
+
             /* Constraints */
             modelBuilder.Entity<Recipe>()
                 .ToTable(r => r.HasCheckConstraint("CK_Recipe_Ingredients", "cardinality(\"Ingredients\") > 0"));

@@ -87,8 +87,9 @@ namespace CookApi.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
-                    b.Property<bool>("UserCreated")
-                        .HasColumnType("boolean");
+                    b.Property<string>("UserEmail")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<bool?>("Vegetarian")
                         .ValueGeneratedOnAdd()
